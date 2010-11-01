@@ -1,0 +1,41 @@
+<%= form_for([@game, @round]) do |f| %>
+  <% if @round.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@round.errors.count, "error") %> prohibited this round from being saved:</h2>
+
+      <ul>
+        <% @round.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="grid_4 alpha">
+    <h6>Round</h6>
+  </div>
+  <% @game.players.each_with_index do |p, i| %>
+    <div class="grid_2<%= " omega" if i == 5 %>">
+      <h6><%= p.name %></h6>
+    </div>
+  <% end %>
+  <div class="clear"></div>
+
+  <div class="grid_4 alpha">
+    <%= f.text_field :number, :value => @game.rounds.count + 1 %>
+  </div>
+
+  <% i = 0 %>
+  <%= f.fields_for :shots do |shot_form| %>
+    <div class="grid_2<%= " omega" if i == 5 %>">
+      <%= shot_form.label :cup %>
+      <%= shot_form.select :cup, 0..10 %>
+      <%= shot_form.hidden_field :game_id, :value => @game.id %>
+      <%= shot_form.hidden_field :player_id, :value => @game.players[i].id %>
+    </div>
+    <% i = i + 1 %>
+  <% end %>
+  <div class="clear"></div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

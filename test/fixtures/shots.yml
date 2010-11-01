@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  round_id: 1
+  player_id: 1
+  cup: 1
+
+two:
+  round_id: 1
+  player_id: 1
+  cup: 1

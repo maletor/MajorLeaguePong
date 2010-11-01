@@ -1,0 +1,40 @@
+<div class="grid_16">
+<h3>Teams</h3>
+<div class="clear"></div>
+<div class="grid_4 alpha">
+  <h6>Name</h6>
+</div>
+<div class="grid_4">
+  <h6>Wins</h6>
+</div>
+<div class="grid_4">
+  <h6>Losses</h6>
+</div>
+<div class="grid_4 omega">
+  <h6>Forfeits</h6>
+</div>
+<div class="clear"></div>
+<% @teams.each_with_index do |team| %>
+  <div class="grid_4 alpha">
+    <p>
+      <%= link_to team.name, team_path(team) %>
+    </p>
+  </div>
+  <div class="grid_4">
+    <p>
+      <%= team.wins %>
+    </p>
+  </div>
+  <div class="grid_4">
+    <p>
+      <%= team.losses %>
+    </p>
+  </div>
+  <div class="grid_4 omega">
+    <p>
+      <%= team.total_shots %>
+    </p>
+  </div>
+  <div class="clear"></div>
+<% end %>
+</div>

@@ -1,0 +1,35 @@
+<div class="grid_16">
+  <h3>Shots</h3>
+  <div class="grid_4 alpha">
+    <h6>Round</h6>
+  </div>
+  <div class="grid_4">
+    <h6>Player</h6>
+  </div>
+  <div class="grid_4">
+    <h6>Cup</h6>
+  </div> 
+  <div class="grid_4 omega">
+    <h6>No Shot?</h6>
+  </div>
+  <div class="clear"></div>
+  <% @shots.each do |shot| %>
+    <div class="grid_4 alpha">
+      <%= shot.round %>
+    </div>
+    <div class="grid_4">
+      <%= shot.player.name %>
+    </div>
+    <div class="grid_4">
+      <%= shot.cup %>
+    </div>
+    <div class="grid_4 omega">
+      <%# shot.no_shot? %>
+    </div>
+  <div class="clear"></div>
+  <% end %>
+
+  <br />
+  <%= link_to 'New Shot', new_game_shot_path(params[:game_id]) %>
+
+</div>

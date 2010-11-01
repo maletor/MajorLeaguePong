@@ -1,0 +1,34 @@
+<div class="grid_16">
+  <h3>Schedule</h1>
+
+  <div class="grid_4 alpha">
+    <h6>Time</h6>
+  </div>
+  <div class="grid_4">
+    <h6>Away</h6>
+  </div>
+  <div class="grid_4">
+    <h6>Home</h6>
+  </div> 
+  <div class="grid_4 omega">
+    <h6>Rounds</h6>
+  </div>
+  <div class="clear"></div>
+
+  <% @games.each do |game| %>
+    <div class="grid_4 alpha">
+      <p><%= link_to game.time.to_s(:short), game_rounds_path(game) %></p>
+    </div>
+    <div class="grid_4">
+      <p><%= game.away.name %></p>
+    </div>
+    <div class="grid_4">
+      <p><%= game.home.name %></p>
+    </div>
+    <div class="grid_4 omega">
+      <p><%= game.rounds.count %></p>
+    </div>
+    <div class="clear"></div>
+  <% end %>
+
+</div>

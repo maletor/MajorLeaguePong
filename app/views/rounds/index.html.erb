@@ -1,0 +1,35 @@
+<div class="grid_16">
+  <h3>Shots</h3>
+  <div class="grid_4 alpha">
+    <h6>Round</h6>
+  </div>
+  <% @game.players.each_with_index do |p, i| %>
+    <div class="grid_2<%= " omega" if i == 5 %>">
+    <h6><%= p.name %></h6>
+  </div>
+  <% end %>
+  <div class="clear"></div>
+  <% @rounds.each do |round| %>
+    <div class="grid_4 alpha">
+      <%= round.number %>
+    </div>
+
+    <% round.shots.each_with_index do |shot, i| %>
+      <div class="grid_2<%= " omega" if i == 5 %>">
+        <%= shot.cup %>
+      </div>
+    <% end %>
+  <div class="clear"></div>
+  <% end %>
+
+  <div id="rounds">
+
+  </div>
+
+  <br />
+  <% if can? :create, @article %>  
+    <%= link_to 'New Round', new_game_round_path(params[:game_id]) %>
+  <% end %>
+
+</div>
+

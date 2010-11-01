@@ -1,0 +1,25 @@
+body {
+
+}
+
+#logo {
+  margin-top: 40px;
+}
+
+#logo h1 {
+  color: #ff5500;
+  margin-bottom: 0px;
+}
+#logo h6 {
+  font-style: italic;
+}
+
+#footer {
+  margin-top: 40px;
+}
+
+.footer_item {
+  margin-bottom: 40px;
+  border-top: 2px solid #000;
+  padding-top: 20px;
+}

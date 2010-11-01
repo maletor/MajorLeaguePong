@@ -1,0 +1,13 @@
+<%= form_for([@game, :round]) do |f| %>
+  <div class="field">
+    <%= f.label :player_id %><br />
+    <%= f.select :player_id, Player.all.collect { |p| [p.name, p.id] } %>
+  </div>
+  <div class="field">
+    <%= f.label :cup %><br />
+    <%= f.select :cup, 0..10 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
