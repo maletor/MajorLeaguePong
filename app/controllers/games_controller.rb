@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
   load_and_authorize_resource
-  before_filter :login_required
 
   # GET /games
   # GET /games.xml
@@ -47,7 +46,6 @@ class GamesController < ApplicationController
 
     if @game.save
       redirect_to(game_rounds_path(@game), :notice => 'Game was successfully created.') 
-      render :xml => @game, :status => :created, :location => @game 
     else
       render :action => "new" 
     end
