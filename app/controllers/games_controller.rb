@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   load_and_authorize_resource
+  before_filter :login_required
 
   # GET /games
   # GET /games.xml

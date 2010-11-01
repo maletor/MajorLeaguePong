@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   load_and_authorize_resource
+  
  
   # GET /teams
   # GET /teams.xml
