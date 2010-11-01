@@ -43,7 +43,6 @@ class PlayersController < ApplicationController
   # POST /players.xml
   def create
     @player = Player.new(params[:player])
-    @player.create_score
 
     respond_to do |format|
       if @player.save
