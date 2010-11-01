@@ -4,14 +4,17 @@
 <div class="grid_4 alpha">
   <h6>Name</h6>
 </div>
-<div class="grid_4">
+<div class="grid_3">
+  <h6>Best Player</h6>
+</div>
+<div class="grid_3">
+  <h6>Points</h6>
+</div>
+<div class="grid_3">
   <h6>Wins</h6>
 </div>
-<div class="grid_4">
+<div class="grid_3 omega">
   <h6>Losses</h6>
-</div>
-<div class="grid_4 omega">
-  <h6>Forfeits</h6>
 </div>
 <div class="clear"></div>
 <% @teams.each_with_index do |team| %>
@@ -20,19 +23,24 @@
       <%= link_to team.name, team_path(team) %>
     </p>
   </div>
-  <div class="grid_4">
+  <div class="grid_3">
+    <p>
+      <%= link_to Player.first.name, player_path(Player.first) %>
+    </p>
+  </div>
+  <div class="grid_3">
+    <p>
+      <%= team.points %>
+    </p>
+  </div>
+  <div class="grid_3">
     <p>
       <%= team.wins %>
     </p>
   </div>
-  <div class="grid_4">
+  <div class="grid_3 omega">
     <p>
       <%= team.losses %>
-    </p>
-  </div>
-  <div class="grid_4 omega">
-    <p>
-      <%= team.total_shots %>
     </p>
   </div>
   <div class="clear"></div>

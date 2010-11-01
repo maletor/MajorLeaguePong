@@ -1,4 +1,6 @@
 class ShotsController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /shots
   # GET /shots.xml
   def index

@@ -4,10 +4,16 @@
 </p>
 <p>
   <% @team.players.each do |player| %>
-    <%= player.name %>
+    <%= player.name %><br />
   <% end %>
   <hr />
-<p>
-  Team pages coming soon.
-</p>
+  <%= RedCloth.new(@team.profile).to_html.html_safe  %>
+  <p>
+    <% if can? :update, @team %>
+      <%= link_to "Edit Team", edit_team_path(@team) %>
+    <% end %>
+    <% if can? :manage, @team %>
+      <%= link_to "Delete Team", team_path(@team), :method => :delete, :confirm => "Are you sure?" %>
+    <% end %>
+  </p>
 </div>

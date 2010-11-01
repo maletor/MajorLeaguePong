@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.all.sort!{ |p1,p2| p1.points <=> p2.points }
+    @players = Player.order("points desc")
 
     respond_to do |format|
       format.html # index.html.erb

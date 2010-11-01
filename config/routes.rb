@@ -18,8 +18,6 @@ MajorLeaguePong::Application.routes.draw do
     resources :shots
   end
 
-  resources :scores
-
   resources :players
 
   resources :teams

@@ -1,13 +1,19 @@
 <div class="grid_16">
-<p>
-  <h3><%= @player.name %></h3>
-</p>
+  <p>
+    <h3><%= @player.name %></h3>
+  </p>
 
-<p>
-  <%= @player.team.name %>
-</p>
-<hr />
-<p>
-  Player pages coming soon.
-</p>
+  <p>
+    <%= @player.team.name %>
+  </p>
+
+  <hr />
+  <%= RedCloth.new(@player.profile).to_html.html_safe  %>
+  <p>
+    <% if can? :update, @player %>
+      <%= link_to "Edit Profile", edit_player_path(@player) %>
+    <% end %>
+    <% if can? :manage, @player %>
+      <%= link_to "Delete Player", player_path(@player), :method => :delete, :confirm => "Are you sure?" %>
+    <% end %>
 </div>

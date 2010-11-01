@@ -3,17 +3,10 @@ class Player < ActiveRecord::Base
   has_many :shots
   belongs_to :team
   belongs_to :user
+  validate :team_size
 
-  def points
-    points = 0
-    shots.each do |s|
-      points += 1 if s.cup == 1 or s.cup == 2 or s.cup == 3
-      points += 2 if s.cup == 4 or s.cup == 5 or s.cup == 6
-      points += 3 if s.cup == 7 or s.cup == 8
-      points += 5 if s.cup == 9
-      points += 7 if s.cup == 10
-    end
-    points
+  def team_size
+    errors[:base] << "Three members per team maximum" if team.players.count >= 3
   end
 
   def hit_percentage

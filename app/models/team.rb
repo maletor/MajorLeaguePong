@@ -23,7 +23,4 @@ class Team < ActiveRecord::Base
     games.count - wins
   end
 
-  def total_shots
-    0
-  end
 end
