@@ -11,7 +11,7 @@
   <div class="clear"></div>
   <% @rounds.each do |round| %>
     <div class="grid_4 alpha">
-      <%= round.number %>
+      <%= link_to round.number, edit_game_round_path(@game, round) %>
     </div>
 
     <% round.shots.each_with_index do |shot, i| %>

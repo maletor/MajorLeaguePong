@@ -4,7 +4,11 @@
   </p>
 
   <p>
-    <%= @player.team.name %>
+ <% if @player.team %>
+   <%= @player.team.name %>
+      <% else %>
+        Free Agent 
+      <% end %>
   </p>
 
   <hr />
@@ -16,4 +20,5 @@
     <% if can? :manage, @player %>
       <%= link_to "Delete Player", player_path(@player), :method => :delete, :confirm => "Are you sure?" %>
     <% end %>
+  </p>
 </div>

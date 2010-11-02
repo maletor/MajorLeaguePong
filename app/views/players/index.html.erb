@@ -21,7 +21,13 @@
     <p><%= link_to player.name, player %></p>
   </div>
   <div class="grid_3">
-    <p><%= link_to player.team.name, player.team %></p>
+    <p>
+      <% if player.team %>
+        <%= link_to(player.team.name, player.team) %>
+      <% else %>
+        Free Agent 
+      <% end %>
+    </p>
   </div>
   <div class="grid_3">
     <p><%= player.points %></p>

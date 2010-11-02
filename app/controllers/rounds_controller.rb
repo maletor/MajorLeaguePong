@@ -33,10 +33,11 @@ class RoundsController < ApplicationController
   end
 
   def update
+    @game = Game.find(params[:game_id])
     @round = Round.find(params[:id])
 
     if @round.update_attributes(params[:round])
-      redirect_to(@round, :notice => 'Round was successfully updated.')
+      redirect_to(game_rounds_path(@game), :notice => 'Round was successfully updated.')
     else
       render :action => "edit" 
     end

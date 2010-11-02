@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :team_id %><br />
-    <%= f.select :team_id, Team.all.collect {|t| [ t.name, t.id ] } %>
+    <%= f.select :team_id, Team.all.collect {|t| [ t.name, t.id ] }, { :include_blank => "None" } %>
   </div>
   <div class="field">
     <%= f.label :profile %><br />

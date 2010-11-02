@@ -10,15 +10,6 @@
       </ul>
     </div>
   <% end %>
-  <div class="grid_4 alpha">
-    <h6>Round</h6>
-  </div>
-  <% @game.players.each_with_index do |p, i| %>
-    <div class="grid_2<%= " omega" if i == 5 %>">
-      <h6><%= p.name %></h6>
-    </div>
-  <% end %>
-  <div class="clear"></div>
 
   <div class="grid_4 alpha">
     <%= f.text_field :number, :value => @game.rounds.count + 1 %>
@@ -27,10 +18,10 @@
   <% i = 0 %>
   <%= f.fields_for :shots do |shot_form| %>
     <div class="grid_2<%= " omega" if i == 5 %>">
+      <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, :selected => @game.players[i].id %>
       <%= shot_form.label :cup %>
       <%= shot_form.select :cup, 0..10 %>
       <%= shot_form.hidden_field :game_id, :value => @game.id %>
-      <%= shot_form.hidden_field :player_id, :value => @game.players[i].id %>
     </div>
     <% i = i + 1 %>
   <% end %>

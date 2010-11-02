@@ -31,4 +31,8 @@
     <div class="clear"></div>
   <% end %>
 
+  <% if can? :create, Game %>
+    <%= link_to "Schedule a New Game", new_game_path %>
+  <% end %>
+
 </div>
