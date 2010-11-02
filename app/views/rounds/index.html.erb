@@ -16,7 +16,11 @@
 
     <% round.shots.each_with_index do |shot, i| %>
       <div class="grid_2<%= " omega" if i == 5 %>">
-        <%= shot.cup %>
+        <% if shot.player %>
+          <%= shot.cup %>
+        <% else %>
+          -
+        <% end %>
       </div>
     <% end %>
   <div class="clear"></div>

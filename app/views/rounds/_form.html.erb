@@ -12,7 +12,11 @@
   <% end %>
 
   <div class="grid_4 alpha">
-    <%= f.text_field :number, :value => @game.rounds.count + 1 %>
+    <% if edit %>
+      <%= f.text_field :number %>
+    <% else %>
+      <%= f.text_field :number, :value => @game.rounds.count + 1 %>
+    <% end %>
   </div>
 
   <% i = 0 %>
