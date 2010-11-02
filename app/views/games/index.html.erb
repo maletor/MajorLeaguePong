@@ -22,7 +22,7 @@
     <div class="grid_4">
       <p>
         <% if game.away == game.winner %>
-          <strong><%= game.away.name %></strong>
+          <em><%= game.away.name %></em>
         <% else %>
           <%= game.away.name %>
         <% end %>
@@ -31,7 +31,7 @@
     <div class="grid_4">
       <p>
         <% if game.home == game.winner %>
-          <strong><%= game.home.name %></strong>
+          <em><%= game.home.name %></em>
         <% else %>
           <%= game.home.name %>
         <% end %>

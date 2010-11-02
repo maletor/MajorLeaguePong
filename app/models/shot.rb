@@ -3,7 +3,6 @@ class Shot < ActiveRecord::Base
   belongs_to :game
   belongs_to :round
   before_save :increment_points
-  after_destroy :decrement_points
 
   def increment_points
     if player
