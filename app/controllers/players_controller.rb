@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.order("#{sort_column} #{sort_direction}")
+    @players = Player.includes(:team).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb
