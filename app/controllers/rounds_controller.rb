@@ -1,4 +1,5 @@
 class RoundsController < ApplicationController
+  load_and_authorize_resource
   
   def index
     @game = Game.find(params[:game_id])

@@ -1,5 +1,5 @@
 <div class="grid_16">
-  <h3><%= @game.home.name %> at <%= @game.away.name %></h3>
+  <h3><%= @game.away.name %> at <%= @game.home.name %></h3>
   <div class="grid_4 alpha">
     <h6>Round</h6>
   </div>
@@ -16,8 +16,10 @@
 
     <% round.shots.each_with_index do |shot, i| %>
       <div class="grid_2<%= " omega" if i == 5 %>">
-        <% if shot.player %>
+        <% if shot.cup != 0 %>
           <%= shot.cup %>
+        <% elsif !shot.player %>
+          &nbsp;
         <% else %>
           -
         <% end %>
@@ -26,12 +28,9 @@
   <div class="clear"></div>
   <% end %>
 
-  <div id="rounds">
-
-  </div>
 
   <br />
-  <% if can? :create, @article %>  
+  <% if can? :create, Round %>  
     <%= link_to 'New Round', new_game_round_path(params[:game_id]) %>
   <% end %>
 
