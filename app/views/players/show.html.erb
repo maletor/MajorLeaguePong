@@ -4,8 +4,8 @@
   </p>
 
   <p>
- <% if @player.team %>
-   <%= @player.team.name %>
+      <% if @player.team %>
+        <%= link_to(@player.team.name, @player.team) %>
       <% else %>
         Free Agent 
       <% end %>

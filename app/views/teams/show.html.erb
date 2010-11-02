@@ -4,7 +4,7 @@
 </p>
 <p>
   <% @team.players.each do |player| %>
-    <%= player.name %><br />
+    <%= link_to player.name, player %><br />
   <% end %>
   <hr />
   <%= RedCloth.new(@team.profile).to_html.html_safe  %>

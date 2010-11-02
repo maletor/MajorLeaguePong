@@ -1,10 +1,11 @@
 class PlayersController < ApplicationController
   load_and_authorize_resource
+  helper_method :sort_column, :sort_direction  
   
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.order("points desc")
+    @players = Player.order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,4 +83,15 @@ class PlayersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def sort_column
+    Player.column_names.include?(params[:sort]) ? params[:sort] : "points"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+  
 end

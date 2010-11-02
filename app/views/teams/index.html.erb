@@ -8,6 +8,9 @@
   <h6>Points</h6>
 </div>
 <div class="grid_3">
+  <h6>OPP</h6>
+</div>
+<div class="grid_3">
   <h6>Wins</h6>
 </div>
 <div class="grid_3 omega">
@@ -23,6 +26,11 @@
   <div class="grid_3">
     <p>
       <%= team.points %>
+    </p>
+  </div>
+  <div class="grid_3">
+    <p>
+      <%= number_with_precision team.opp %>
     </p>
   </div>
   <div class="grid_3">

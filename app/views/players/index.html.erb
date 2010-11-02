@@ -7,10 +7,10 @@
     <h6>Team</h6>
   </div>
   <div class="grid_2">
-    <h6>Points</h6>
+    <h6><%= sortable "opp", "OPP" %></h6>
   </div>
   <div class="grid_2">
-    <h6>OPP</h6>
+    <h6><%= sortable "points" %></h6>
   </div>
   <div class="grid_3">
     <h6>Hit Percentage</h6>
@@ -33,10 +33,10 @@
     </p>
   </div>
   <div class="grid_2">
-    <p><%= player.points %></p>
+    <p><%= number_with_precision player.opp %></p>
   </div>
   <div class="grid_2">
-    <p><%= number_with_precision player.opp %></p>
+    <p><%= player.points %></p>
   </div>
  <div class="grid_3">
    <p><%= number_to_percentage(player.hit_percentage) %></p>

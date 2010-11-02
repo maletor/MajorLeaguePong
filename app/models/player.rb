@@ -3,7 +3,7 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
-  def opp
+  def calculate_opp
     shots.count == 0 ? 0 : points.to_f / shots.count.to_f
   end
 
@@ -13,18 +13,13 @@ class Player < ActiveRecord::Base
 
   def hit_percentage
     hits = 0 
-    shots.each do |s|
-      hits += 1 unless s.cup == 0
-    end
-
+    shots.each { |s| hits += 1 unless s.cup == 0 }
     shots.count == 0 ? 0 : (hits.to_f / shots.count.to_f) * 100 
   end
 
   def last_cups
     hits = 0
-    shots.each do |s|
-      hits += 1 if s.cup == 10
-    end
+    shots.each { |s| hits += 1 if s.cup == 10 }
     hits
   end
 end
