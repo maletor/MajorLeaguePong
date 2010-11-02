@@ -3,6 +3,10 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
+  def opp
+    
+  end
+
   def team_size
     errors[:base] << "Three members per team maximum" if team.players.count >= 3
   end

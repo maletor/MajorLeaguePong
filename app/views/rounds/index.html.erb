@@ -11,7 +11,11 @@
   <div class="clear"></div>
   <% @rounds.each do |round| %>
     <div class="grid_4 alpha">
-      <%= link_to round.number, edit_game_round_path(@game, round) %>
+      <% if can? :edit, Round %>
+        <%= link_to round.number, edit_game_round_path(@game, round) %>
+      <% else %>
+        <%= round.number %>
+      <% end %>
     </div>
 
     <% round.shots.each_with_index do |shot, i| %>
