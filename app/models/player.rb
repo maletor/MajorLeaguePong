@@ -1,5 +1,4 @@
 class Player < ActiveRecord::Base
-  has_one :score
   has_many :shots
   belongs_to :team
   belongs_to :user
