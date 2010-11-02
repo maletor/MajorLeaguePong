@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(:version => 20101102003713) do
     t.integer  "away_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rounds"
   end
 
   create_table "players", :force => true do |t|
@@ -30,9 +29,9 @@ ActiveRecord::Schema.define(:version => 20101102003713) do
     t.integer  "shot_count"
     t.integer  "point_count"
     t.integer  "user_id"
-    t.integer  "points",                                    :default => 0,  :null => false
-    t.text     "profile",                                   :default => "", :null => false
-    t.decimal  "opp",         :precision => 8, :scale => 3
+    t.integer  "points",                                    :default => 0,   :null => false
+    t.text     "profile",                                   :default => "",  :null => false
+    t.decimal  "opp",         :precision => 8, :scale => 3, :default => 0.0, :null => false
   end
 
   create_table "rounds", :force => true do |t|
@@ -55,9 +54,9 @@ ActiveRecord::Schema.define(:version => 20101102003713) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "profile",                                  :default => "", :null => false
-    t.integer  "points",                                   :default => 0,  :null => false
-    t.decimal  "opp",        :precision => 8, :scale => 3
+    t.text     "profile",                                  :default => "",  :null => false
+    t.integer  "points",                                   :default => 0,   :null => false
+    t.decimal  "opp",        :precision => 8, :scale => 3, :default => 0.0, :null => false
   end
 
   create_table "users", :force => true do |t|
