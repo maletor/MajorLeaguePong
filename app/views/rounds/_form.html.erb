@@ -19,7 +19,7 @@
   <%= f.fields_for :shots do |shot_form| %>
     <div class="grid_2<%= " omega" if i == 5 %>">
       <% if edit %>
-        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] } %>
+        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, { :include_blank => "None" } %>
       <% else %>
         <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, { :include_blank => "None", :selected => @game.players[i].id } %>
       <% end %>
