@@ -21,7 +21,7 @@
       <% if edit %>
         <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] } %>
       <% else %>
-        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, :selected => @game.players[i].id %>
+        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, { :include_blank => "None", :selected => @game.players[i].id } %>
       <% end %>
       <%= shot_form.label :cup %>
       <%= shot_form.select :cup, 0..10 %>

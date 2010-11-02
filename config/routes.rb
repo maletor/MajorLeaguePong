@@ -1,8 +1,5 @@
 MajorLeaguePong::Application.routes.draw do
 
-
-  match 'user/edit' => 'users#edit', :as => :edit_user
-
   match 'signup' => 'users#new', :as => :signup
 
   match 'logout' => 'sessions#destroy', :as => :logout

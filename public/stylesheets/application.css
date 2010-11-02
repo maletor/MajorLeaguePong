@@ -6,6 +6,10 @@ body {
   margin-top: 40px;
 }
 
+#navigation {
+  margin-bottom: 20px;
+}
+
 #logo h1 {
   color: #ff5500;
   margin-bottom: 0px;
