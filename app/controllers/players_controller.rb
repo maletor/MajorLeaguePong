@@ -87,7 +87,7 @@ class PlayersController < ApplicationController
   private
 
   def sort_column
-    Player.column_names.include?(params[:sort]) ? params[:sort] : "points"
+    Player.column_names.include?(params[:sort]) ? params[:sort] : "opp"
   end
   
   def sort_direction
