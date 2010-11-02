@@ -5,6 +5,7 @@ class Team < ActiveRecord::Base
   has_many :players
   accepts_nested_attributes_for :players
 
+
   def games
     home_games + away_games
   end

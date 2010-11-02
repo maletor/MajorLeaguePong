@@ -1,13 +1,16 @@
 <div class="grid_16">
 <h3>Leaderboard</h3>
-  <div class="grid_4 alpha">
+  <div class="grid_3 alpha">
     <h6>Name</h6>
   </div>
   <div class="grid_3">
     <h6>Team</h6>
   </div>
-  <div class="grid_3">
-    <h6>Points</abbr></h6>
+  <div class="grid_2">
+    <h6>Points</h6>
+  </div>
+  <div class="grid_2">
+    <h6>OPP</h6>
   </div>
   <div class="grid_3">
     <h6>Hit Percentage</h6>
@@ -17,7 +20,7 @@
   </div>
   <div class="clear"></div>
 <% @players.each do |player| %>
-  <div class="grid_4 alpha">
+  <div class="grid_3 alpha">
     <p><%= link_to player.name, player %></p>
   </div>
   <div class="grid_3">
@@ -29,8 +32,11 @@
       <% end %>
     </p>
   </div>
-  <div class="grid_3">
+  <div class="grid_2">
     <p><%= player.points %></p>
+  </div>
+  <div class="grid_2">
+    <p><%= number_with_precision player.opp %></p>
   </div>
  <div class="grid_3">
    <p><%= number_to_percentage(player.hit_percentage) %></p>

@@ -4,7 +4,7 @@ class Player < ActiveRecord::Base
   belongs_to :user
 
   def opp
-    
+    shots.count == 0 ? 0 : points.to_f / shots.count.to_f
   end
 
   def team_size
