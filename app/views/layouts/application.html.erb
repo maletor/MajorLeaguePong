@@ -10,32 +10,37 @@
    <body>
      <div class="container_16">
        <div class="grid_16" id="logo">
-         <h1>Major League Pong</h1>
-         <h6>Have a clear fucking hierarchy</h6>
+         <div class="grid_4 alpha">
+           <%= image_tag "BeerPongLogo.jpg", :alt => "Major League Pong", :width => 220 %>
+         </div>
+         <div class="grid_12 omega">
+           <h1>Major League Pong</h1>
+           <h6>Have a clear fucking hierarchy</h6>
+         </div>
        </div>
        <div class="clear"></div>
        <div class="grid_16" id="navigation">
-         <% if logged_in? %>
+         <% if logged_in? and current_user.player %>
            <p>
              Welcome <%= current_user.player.name %>
          </p>
        <% end %>
        <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
-       <% if logged_in? %>
+       <% if logged_in? and current_user.player %>
          <% if current_user.player %>
            <%= link_to_unless_current "Edit Profile", edit_player_path(current_user.player) %> 
          <% end %>
          | <%= link_to_unless_current "Logout", logout_path %>
-       <% else %>
-         <%= link_to "Signup", signup_path %> | <%= link_to "Login", login_path %>
-       <% end %>
-     </div>
-     <div class="clear"></div>
-     <% if flash[:alert] %><div class="grid_16"><p class="alert"><%= flash[:alert] %></p></div><div class="clear"></div><% end %> 
-     <%= yield %>
-     <div class="grid_16" id="footer">
-     </div>
+     <% else %>
+       <%= link_to "Signup", signup_path %> | <%= link_to "Login", login_path %>
+     <% end %>
    </div>
+   <div class="clear"></div>
+   <% if flash[:alert] %><div class="grid_16"><p class="alert"><%= flash[:alert] %></p></div><div class="clear"></div><% end %> 
+   <%= yield %>
+   <div class="grid_16" id="footer">
+   </div>
+ </div>
 
  </body>
 </html>

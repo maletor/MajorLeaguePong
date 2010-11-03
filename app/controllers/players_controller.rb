@@ -5,7 +5,8 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.includes(:team).order("#{sort_column} #{sort_direction}")
+
+    @players = Player.includes(:shots, :team).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,7 +88,7 @@ class PlayersController < ApplicationController
   private
 
   def sort_column
-    Player.column_names.include?(params[:sort]) ? params[:sort] : "opp"
+    params[:sort] ||= "opp"
   end
   
   def sort_direction

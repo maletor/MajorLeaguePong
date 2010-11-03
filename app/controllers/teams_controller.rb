@@ -1,16 +1,12 @@
 class TeamsController < ApplicationController
   load_and_authorize_resource
+  helper_method :sort_column, :sort_direction  
   
  
   # GET /teams
   # GET /teams.xml
   def index
-    @teams = Team.order("points desc")
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @teams }
-    end
+    @teams = Team.order("#{sort_column} #{sort_direction}")
   end
 
   # GET /teams/1
@@ -84,4 +80,15 @@ class TeamsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def sort_column
+    params[:sort] ||= "points"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+  
 end

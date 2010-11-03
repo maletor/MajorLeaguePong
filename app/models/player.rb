@@ -11,13 +11,13 @@ class Player < ActiveRecord::Base
     errors[:base] << "Three members per team maximum" if team.players.count >= 3
   end
 
-  def hit_percentage
+  def calculate_hit_percentage
     hits = 0 
     shots.each { |s| hits += 1 unless s.cup == 0 }
     shots.count == 0 ? 0 : (hits.to_f / shots.count.to_f) * 100 
   end
 
-  def last_cups
+  def calculate_last_cups
     hits = 0
     shots.each { |s| hits += 1 if s.cup == 10 }
     hits
