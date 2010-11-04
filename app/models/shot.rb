@@ -2,29 +2,40 @@ class Shot < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
   belongs_to :round
-  before_save :award_player
-  after_destroy :punish_player
+  after_save :award_player
+  before_update :change_player
+  before_destroy :punish_player
 
   def award_player
     if player
-      player.update_attributes(:points => player.points += however_many,
-       :shot_percentage => player.shots.where("cup != 0") / player.shots,
-       :last_cups => player.last_cups += cup == 10 ? 1 : 0)
+      player.update_attributes(
+        :points => player.points += however_many,
+        :opp => player.calculate_opp,
+        :hit_percentage => player.calculate_hit_percentage,
+        :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
-      if player.team
-        player.team.update_attributes(:points => player.team.points += however_many)
-      end
+        if player.team
+          player.team.update_attributes(
+            :points => player.team.points += however_many)
+        end
     end
+  end
+
+  def change_player
+    punish_player if player_id_changed?
   end
 
   def punish_player
     if player
-      player.update_attributes(:points => player.points -= however_many,
-       :shot_percentage => player.shots.where("cup != 0") / player.shots,
-       :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
+      player.update_attributes(
+      :points => player.points -= however_many,
+      :opp => player.calculate_opp,
+      :hit_percentage => (player.shots.where("cup != 0").count.to_f / player.shots.count.to_f) * 100,
+      :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
       if player.team
-        player.team.update_attributes(:points => player.team.points -= however_many)
+        player.team.update_attributes(
+          :points => player.team.points -= however_many)
       end
     end
   end
@@ -42,4 +53,5 @@ class Shot < ActiveRecord::Base
       0
     end
   end
+
 end

@@ -9,7 +9,7 @@ class Team < ActiveRecord::Base
     home_games + away_games
   end
 
-  def wins
+  def calculate_wins
     count = 0 
     players.each do |p|
       p.shots.each do |s|
@@ -19,7 +19,7 @@ class Team < ActiveRecord::Base
     count
   end
 
-  def losses
+  def calculate_losses
     games.count - wins
   end
 
