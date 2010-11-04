@@ -8,8 +8,8 @@ class Shot < ActiveRecord::Base
   def award_player
     if player
       player.update_attributes(:points => player.points += however_many,
-                               :shot_percentage => player.shots.where("cup != 0") / player.shots,
-                               :last_cups => player.last_cups += cup == 10 ? 10 : 0)
+       :shot_percentage => player.shots.where("cup != 0") / player.shots,
+       :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
       if player.team
         player.team.update_attributes(:points => player.team.points += however_many)
@@ -19,20 +19,17 @@ class Shot < ActiveRecord::Base
 
   def punish_player
     if player
-      player.update_attributes(:points => player.points -= 1) if [1, 2, 3, 5, 6].include?(cup)
-      player.update_attributes(:points => player.points -= 2) if [4, 7, 8, 9].include?(cup)
-      player.update_attributes(:points => player.points -= 3) if cup == 10
-      player.update_attributes(:shot_percentage => player.shots.where("cup != 0") / player.shots)
+      player.update_attributes(:points => player.points -= however_many,
+       :shot_percentage => player.shots.where("cup != 0") / player.shots,
+       :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
       if player.team
-        player.team.update_attributes(:points => player.team.points -= 1) if [1, 2, 3, 5, 6].include?(cup)
-        player.team.update_attributes(:points => player.team.points -= 2) if [4, 7, 8, 9].include?(cup)
-        player.team.update_attributes(:points => player.team.points -= 3) if cup == 10
+        player.team.update_attributes(:points => player.team.points -= however_many)
       end
     end
   end
 
-  private 
+  private
 
   def however_many
     if [1, 2, 3, 5, 6].include?(cup)
