@@ -1,3 +1,8 @@
 h1. MajorLeaguePong
 
 h3. Have a clear fucking hierarchy
+
+h6. Bugs
+
+Free Agents cannot temporarily belong to a team, such that the points they make do not contriubte towards the overall teams.
+Changing attributes for a shot does not correctly update player objects

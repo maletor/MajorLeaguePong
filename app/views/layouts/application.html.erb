@@ -14,21 +14,29 @@
            <%= image_tag "BeerPongLogo.jpg", :alt => "Major League Pong", :width => 220 %>
          </div>
          <div class="grid_12 omega">
-           <h1>Major League Pong</h1>
-           <h6>Have a clear fucking hierarchy</h6>
+           <div class="grid_12 omega">
+             <h1>Major League Pong</h1>
+             <h6>Have a clear fucking hierarchy</h6>
+           </div>
+           <div class="clear"></div>
+           <div class="grid_12 omega">
+             <% if logged_in? and current_user.player %>
+               <p>
+                 Welcome <%= current_user.player.name %>, kick some ass. 
+               </p>
+             <% end %>
+           </div>
          </div>
        </div>
        <div class="clear"></div>
        <div class="grid_16" id="navigation">
-         <% if logged_in? and current_user.player %>
-           <p>
-             Welcome <%= current_user.player.name %>
-         </p>
-       <% end %>
+         
        <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
-       <% if logged_in? and current_user.player %>
+       <% if logged_in? %>
          <% if current_user.player %>
            <%= link_to_unless_current "Edit Profile", edit_player_path(current_user.player) %> 
+         <% else %>
+            Authorization Required to edit profiles
          <% end %>
          | <%= link_to_unless_current "Logout", logout_path %>
      <% else %>

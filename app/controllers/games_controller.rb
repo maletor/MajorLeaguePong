@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.includes(:away, :home).order("time desc")
+    @games = Game.includes(:away, :home, :rounds).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb
