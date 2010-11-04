@@ -12,7 +12,7 @@
   <% @rounds.each do |round| %>
     <div class="grid_4 alpha">
       <% if can? :edit, Round %>
-        <%= link_to round.number, edit_game_round_path(@game, round) %>
+        <%= link_to round.number, edit_game_round_path(@game, round) %> 
       <% else %>
         <%= round.number %>
       <% end %>

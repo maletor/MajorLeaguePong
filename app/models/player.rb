@@ -3,12 +3,13 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
-  def calculate_opp
-    shots.count == 0 ? 0 : points.to_f / shots.count.to_f
-  end
 
   def team_size
     errors[:base] << "Three members per team maximum" if team.players.count >= 3
+  end
+
+  def calculate_opp
+    shots.count == 0 ? 0 : points.to_f / shots.count.to_f
   end
 
   def calculate_hit_percentage

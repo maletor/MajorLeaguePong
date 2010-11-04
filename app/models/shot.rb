@@ -2,37 +2,45 @@ class Shot < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
   belongs_to :round
-  before_save :award_player
-  after_destroy :punish_player
+  after_save :award_player
+  before_update :change_player
+  before_destroy :punish_player
 
   def award_player
     if player
-      player.update_attributes(:points => player.points += however_many,
-                               :shot_percentage => player.shots.where("cup != 0") / player.shots,
-                               :last_cups => player.last_cups += cup == 10 ? 10 : 0)
+      player.update_attributes(
+        :points => player.points += however_many,
+        :opp => player.calculate_opp,
+        :hit_percentage => player.calculate_hit_percentage,
+        :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
-      if player.team
-        player.team.update_attributes(:points => player.team.points += however_many)
-      end
+        if player.team
+          player.team.update_attributes(
+            :points => player.team.points += however_many)
+        end
     end
+  end
+
+  def change_player
+    punish_player if player_id_changed?
   end
 
   def punish_player
     if player
-      player.update_attributes(:points => player.points -= 1) if [1, 2, 3, 5, 6].include?(cup)
-      player.update_attributes(:points => player.points -= 2) if [4, 7, 8, 9].include?(cup)
-      player.update_attributes(:points => player.points -= 3) if cup == 10
-      player.update_attributes(:shot_percentage => player.shots.where("cup != 0") / player.shots)
+      player.update_attributes(
+      :points => player.points -= however_many,
+      :opp => player.calculate_opp,
+      :hit_percentage => (player.shots.where("cup != 0").count.to_f / player.shots.count.to_f) * 100,
+      :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
       if player.team
-        player.team.update_attributes(:points => player.team.points -= 1) if [1, 2, 3, 5, 6].include?(cup)
-        player.team.update_attributes(:points => player.team.points -= 2) if [4, 7, 8, 9].include?(cup)
-        player.team.update_attributes(:points => player.team.points -= 3) if cup == 10
+        player.team.update_attributes(
+          :points => player.team.points -= however_many)
       end
     end
   end
 
-  private 
+  private
 
   def however_many
     if [1, 2, 3, 5, 6].include?(cup)
@@ -45,4 +53,5 @@ class Shot < ActiveRecord::Base
       0
     end
   end
+
 end

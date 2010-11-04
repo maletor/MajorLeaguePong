@@ -45,12 +45,10 @@ class RoundsController < ApplicationController
   end
 
   def destroy
+    @game = Game.find(params[:game_id])
     @round = Round.find(params[:id])
     @round.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(rounds_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(game_rounds_url(@game))
   end
 end

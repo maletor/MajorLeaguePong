@@ -12,7 +12,7 @@
     <h6></h6>
   </div>
   <div class="grid_6 omega">
-    <p><%= number_with_precision Player.average("hit_percentage") %></p>
+    <p><%= number_to_percentage Player.average("hit_percentage") %></p>
   </div>
   <div class="clear"></div>
   <div class="grid_3 alpha">
@@ -31,7 +31,7 @@
     <h6><%= sortable "hit_percentage" %></h6>
   </div>
   <div class="grid_3 omega">
-    <h6><%= sortable "shots.cup", "Last Cups" %></h6>
+    <h6><%= sortable "last_cups", "Last Cups" %></h6>
   </div>
   <div class="clear"></div>
 <% @players.each do |player| %>
