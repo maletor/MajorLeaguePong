@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20101103152919) do
     t.integer  "user_id"
     t.integer  "points",                                       :default => 0,   :null => false
     t.text     "profile",                                      :default => "",  :null => false
-    t.decimal  "opp",            :precision => 8, :scale => 3
+    t.decimal  "opp",            :precision => 8, :scale => 3, :default => 0.0, :null => false
     t.decimal  "hit_percentage", :precision => 8, :scale => 3, :default => 0.0, :null => false
     t.integer  "last_cups",                                    :default => 0,   :null => false
     t.integer  "assholes"
