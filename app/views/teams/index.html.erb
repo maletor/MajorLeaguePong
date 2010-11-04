@@ -5,16 +5,16 @@
   <h6><%= sortable "name" %></h6>
 </div>
 <div class="grid_3">
+  <h6><%= sortable "opp", "OPP" %></h6>
+</div>
+<div class="grid_3">
   <h6><%= sortable "points" %></h6>
 </div>
 <div class="grid_3">
-  <h6>OPP</h6>
-</div>
-<div class="grid_3">
-  <h6>Wins</h6>
+  <h6><%= sortable "wins" %></h6>
 </div>
 <div class="grid_3 omega">
-  <h6>Losses</h6>
+  <h6><%= sortable "losses" %></h6>
 </div>
 <div class="clear"></div>
 <% @teams.each_with_index do |team| %>
@@ -23,16 +23,17 @@
       <%= link_to team.name, team_path(team) %>
     </p>
   </div>
+   <div class="grid_3">
+    <p>
+      <%= number_with_precision team.opp %>
+    </p>
+  </div>
   <div class="grid_3">
     <p>
       <%= team.points %>
     </p>
   </div>
-  <div class="grid_3">
-    <p>
-      <%= number_with_precision team.opp %>
-    </p>
-  </div>
+ 
   <div class="grid_3">
     <p>
       <%= team.wins %>

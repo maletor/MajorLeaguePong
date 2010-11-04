@@ -1,10 +1,11 @@
 class GamesController < ApplicationController
   load_and_authorize_resource
+  helper_method :sort_column, :sort_direction  
 
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.order("time desc")
+    @games = Game.includes(:away, :home).order("time desc")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -78,4 +79,15 @@ class GamesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def sort_column
+    params[:sort] ||= "time"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
 end
