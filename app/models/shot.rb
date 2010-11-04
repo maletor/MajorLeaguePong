@@ -16,7 +16,8 @@ class Shot < ActiveRecord::Base
 
         if player.team
           player.team.update_attributes(
-            :points => player.team.points += however_many)
+            :points => player.team.points += however_many,
+            :wins => player.team.wins += cup == 10 ? 1 : 0)
         end
     end
   end
@@ -35,7 +36,8 @@ class Shot < ActiveRecord::Base
 
       if player.team
         player.team.update_attributes(
-          :points => player.team.points -= however_many)
+          :points => player.team.points -= however_many,
+          :wins => player.team.wins -= cup == 10 ? 1 : 0)
       end
     end
   end
