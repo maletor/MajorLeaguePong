@@ -15,7 +15,7 @@ class Shot < ActiveRecord::Base
         :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
         if player.team
-          player.team.update_attributes(:opp => 0, :points => player.team.points += however_many)
+          player.team.update_attributes(:opp => 0, :points => 0)
 
           if cup == 10
             winning_team = player.team
@@ -40,9 +40,15 @@ class Shot < ActiveRecord::Base
       :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
       if player.team
-        player.team.update_attributes(
-          :points => player.team.points -= however_many,
-          :wins => player.team.wins -= cup == 10 ? 1 : 0)
+        player.team.update_attributes(:points => 0, :opp => 0)
+
+         if cup == 10
+            winning_team = player.team
+            losing_team = player.team == game.away ? game.home : game.away
+            winning_team.update_attributes(:wins => winning_team.wins -= 1)
+            losing_team.update_attributes(:losses => losing_team.losses -= 1)
+          end
+
       end
     end
   end
