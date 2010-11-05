@@ -2,6 +2,7 @@ class Shot < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
   belongs_to :round
+  belongs_to :team
 
   before_save :award_player
   after_destroy :punish_player
@@ -14,17 +15,14 @@ class Shot < ActiveRecord::Base
         :opp => (player.points).to_f / (player.shots.count + 1).to_f,
         :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
-        if player.team
-          player.team.update_attributes(:opp => 0, :points => 0)
-
-          if cup == 10
-            winning_team = player.team
-            losing_team = player.team == game.away ? game.home : game.away
-            winning_team.update_attributes(:wins => winning_team.wins += 1)
-            losing_team.update_attributes(:losses => losing_team.losses += 1)
-          end
-
+        if cup == 10
+          team.update_attributes(:points => team.points += 3, :opp => team.points.to_f / (team.shots.count + 1).to_f, :wins => team.wins += 1)
+          losing_team = team == game.away ? game.home : game.away
+          losing_team.update_attributes(:losses => losing_team.losses += 1)
+        else
+          team.update_attributes(:points => team.points += however_many, :opp => team.points.to_f / (team.shots.count + 1).to_f)
         end
+
     end
   end
 
@@ -36,15 +34,12 @@ class Shot < ActiveRecord::Base
         :hit_percentage => player.calculate_hit_percentage,
         :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
-        if player.team
-          player.team.update_attributes(:points => 0, :opp => 0)
-
-          if cup == 10
-            winning_team = player.team
-            losing_team = player.team == game.away ? game.home : game.away
-            winning_team.update_attributes(:wins => winning_team.wins -= 1)
-            losing_team.update_attributes(:losses => losing_team.losses -= 1)
-          end
+        if cup == 10
+          team.update_attributes(:points => team.points -= 3, :opp => team.points.to_f / (team.shots.count + 1).to_f, :wins => team.wins -= 1)
+          losing_team = team == game.away ? game.home : game.away
+          losing_team.update_attributes(:losses => losing_team.losses -= 1)
+        else
+          team.update_attributes(:points => team.points -= however_many, :opp => team.points.to_f / (team.shots.count + 1).to_f)
         end
     end
   end

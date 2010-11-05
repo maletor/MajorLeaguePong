@@ -24,7 +24,7 @@ class RoundsController < ApplicationController
 
   def create
     @game = Game.find(params[:game_id])
-    @round = @game.rounds.create(params[:round])
+    @round = @game.rounds.new(params[:round])
 
     if @round.save
       redirect_to(game_rounds_path(@game), :notice => 'Round was successfully created.')

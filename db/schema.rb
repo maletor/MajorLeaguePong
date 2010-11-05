@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104040928) do
+ActiveRecord::Schema.define(:version => 20101105173421) do
 
   create_table "games", :force => true do |t|
     t.datetime "time"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20101104040928) do
     t.integer  "user_id"
     t.integer  "points",                                       :default => 0,   :null => false
     t.text     "profile",                                      :default => "",  :null => false
-    t.decimal  "opp",            :precision => 8, :scale => 3, :default => 0.0, :null => false
+    t.decimal  "opp",            :precision => 8, :scale => 3
     t.decimal  "hit_percentage", :precision => 8, :scale => 3, :default => 0.0, :null => false
     t.integer  "last_cups",                                    :default => 0,   :null => false
     t.integer  "assholes"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20101104040928) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.integer  "round_id"
+    t.integer  "team_id"
   end
 
   create_table "teams", :force => true do |t|
