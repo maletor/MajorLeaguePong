@@ -11,7 +11,7 @@ class Shot < ActiveRecord::Base
     if player
       player.update_attributes(
         :points => player.points += however_many,
-        :opp => player.calculate_opp,
+        :opp => (player.points += however_many).to_f,
         :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
         if player.team
@@ -23,6 +23,7 @@ class Shot < ActiveRecord::Base
             winning_team.update_attributes(:wins => winning_team.wins += 1)
             losing_team.update_attributes(:losses => losing_team.losses += 1)
           end
+
         end
     end
   end
@@ -34,22 +35,21 @@ class Shot < ActiveRecord::Base
   def punish_player
     if player
       player.update_attributes(
-      :points => player.points -= however_many,
-      :opp => player.calculate_opp,
-      :hit_percentage => player.calculate_hit_percentage,
-      :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
+        :points => player.points -= however_many,
+        :opp => player.calculate_opp,
+        :hit_percentage => player.calculate_hit_percentage,
+        :last_cups => player.last_cups -= cup == 10 ? 1 : 0)
 
-      if player.team
-        player.team.update_attributes(:points => 0, :opp => 0)
+        if player.team
+          player.team.update_attributes(:points => 0, :opp => 0)
 
-         if cup == 10
+          if cup == 10
             winning_team = player.team
             losing_team = player.team == game.away ? game.home : game.away
             winning_team.update_attributes(:wins => winning_team.wins -= 1)
             losing_team.update_attributes(:losses => losing_team.losses -= 1)
           end
-
-      end
+        end
     end
   end
 
