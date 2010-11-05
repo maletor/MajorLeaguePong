@@ -29,6 +29,11 @@
       <% end %><br />
       <%= shot_form.select :cup, 0..10 %>
       <%= shot_form.hidden_field :game_id, :value => @game.id %>
+      <% if i < 3 %>
+        <%= shot_form.hidden_field :team_id, :value => @game.away.id %>
+      <% else %>
+        <%= shot_form.hidden_field :team_id, :value => @game.home.id %>
+      <% end %>
     </div>
     <% i = i + 1 %>
   <% end %>
