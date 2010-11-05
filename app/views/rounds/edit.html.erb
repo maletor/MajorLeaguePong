@@ -2,7 +2,7 @@
 <h3>Editing round</h3>
 <h6>Warning: Editing rounds is currently broken, please delete and recreate</h6>
 <p>
-  <%= link_to "Delete", game_round_path(@game, @round), :method => :delete, :confirm => "Are you sure?" %>
+  <%= link_to "Delete Round", game_round_path(@game, @round), :method => :delete, :confirm => "Are you sure?" %> | <%= link_to "Back", game_rounds_path(@game) %>
 </p>
 
 <%= render :partial => 'form', :locals => { :edit => true } %>

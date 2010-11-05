@@ -1,88 +1,51 @@
 class PlayersController < ApplicationController
   load_and_authorize_resource
   helper_method :sort_column, :sort_direction  
-  
-  # GET /players
-  # GET /players.xml
+
   def index
-
     @players = Player.includes(:shots, :team).order("#{sort_column} #{sort_direction}")
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @players }
-    end
+    @opp_std_dev = calculate_std_dev(Player, "opp")
+    @points_std_dev = calculate_std_dev(Player, "points")
+    @hit_percentage_std_dev = calculate_std_dev(Player, "hit_percentage")
   end
 
-  # GET /players/1
-  # GET /players/1.xml
   def show
     @player = Player.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @player }
-    end
   end
 
-  # GET /players/new
-  # GET /players/new.xml
   def new
     @player = Player.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @player }
-    end
   end
 
-  # GET /players/1/edit
   def edit
     @player = Player.find(params[:id])
   end
 
-  # POST /players
-  # POST /players.xml
   def create
     @player = Player.new(params[:player])
 
-    respond_to do |format|
-      if @player.save
-        format.html { redirect_to(@player, :notice => 'Player was successfully created.') }
-        format.xml  { render :xml => @player, :status => :created, :location => @player }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
-      end
+    if @player.save
+      redirect_to(@player, :notice => 'Player was successfully created.')
+    else
+      render :action => "new" 
     end
   end
 
-  # PUT /players/1
-  # PUT /players/1.xml
   def update
     @player = Player.find(params[:id])
 
-    respond_to do |format|
-      if @player.update_attributes(params[:player])
-        format.html { redirect_to(@player, :notice => 'Player was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
-      end
+    if @player.update_attributes(params[:player])
+      redirect_to(@player, :notice => 'Player was successfully updated.') 
+    else
+      render :action => "edit" 
     end
   end
 
-  # DELETE /players/1
-  # DELETE /players/1.xml
   def destroy
     @player = Player.find(params[:id])
     @player.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(players_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(players_url) 
   end
 
   private
@@ -90,9 +53,10 @@ class PlayersController < ApplicationController
   def sort_column
     params[:sort] ||= "opp"
   end
-  
+
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
-  
+
+
 end

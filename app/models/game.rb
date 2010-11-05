@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
-  has_many :shots
-  has_many :rounds
+  has_many :shots, :dependent => :destroy
+  has_many :rounds, :dependent => :destroy
   accepts_nested_attributes_for :shots
   belongs_to :away, :class_name => 'Team'
   belongs_to :home, :class_name => 'Team'

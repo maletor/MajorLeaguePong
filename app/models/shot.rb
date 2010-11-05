@@ -4,14 +4,14 @@ class Shot < ActiveRecord::Base
   belongs_to :round
 
   before_save :award_player
-  after_save :award_hit_percentage
   after_destroy :punish_player
 
   def award_player
     if player
       player.update_attributes(
         :points => player.points += however_many,
-        :opp => (player.points += however_many).to_f,
+        :hit_percentage => (((player.shots.where("cup != 0")).count + (cup != 0 ? 1 : 0 )).to_f / (player.shots.count + 1).to_f) * 100,
+        :opp => (player.points).to_f / (player.shots.count + 1).to_f,
         :last_cups => player.last_cups += cup == 10 ? 1 : 0)
 
         if player.team
@@ -26,10 +26,6 @@ class Shot < ActiveRecord::Base
 
         end
     end
-  end
-
-  def award_hit_percentage
-    player.update_attributes(:hit_percentage => player.calculate_hit_percentage)
   end
 
   def punish_player

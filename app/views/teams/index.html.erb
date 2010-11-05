@@ -1,5 +1,10 @@
 <div class="grid_16">
   <h3>Teams</h3>
+   <% if can? :manage, Team %>
+    <p>
+      <%= link_to "New Team", new_team_path %>
+    </p>
+  <% end %>
   <h6>Points and OPP need to be recalculated to factor in free agents playing for a team member</h6>
 <div class="clear"></div>
 <div class="grid_4 alpha">

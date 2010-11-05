@@ -23,11 +23,10 @@
   <%= f.fields_for :shots do |shot_form| %>
     <div class="grid_2<%= " omega" if i == 5 %>">
       <% if edit %>
-        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, { :include_blank => "None" } %>
+        <%= shot_form.select :player_id, Player.order("name asc").collect {|p| [ p.name, p.id ] }, { :include_blank => "None" } %>
       <% else %>
-        <%= shot_form.select :player_id, Player.all.collect {|p| [ p.name, p.id ] }, { :include_blank => "None", :selected => @game.players[i].id } %>
-      <% end %>
-      <%= shot_form.label :cup %>
+        <%= shot_form.select :player_id, Player.order("name asc").collect {|p| [ p.name, p.id ] }, { :include_blank => "None", :selected => @game.players[i].id } %>
+      <% end %><br />
       <%= shot_form.select :cup, 0..10 %>
       <%= shot_form.hidden_field :game_id, :value => @game.id %>
     </div>

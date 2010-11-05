@@ -1,5 +1,16 @@
 <div class="grid_16">
   <h3><%= @game.away.name %> at <%= @game.home.name %></h3>
+  <% if can? :manage, @game %>
+    <p>
+      <%= link_to "Edit Game", edit_game_path(@game) %> | <%= link_to "Delete", @game, :method => :delete, :confirm => "Are you sure?" %>
+    </p>
+  <% end %>
+  
+  <% if can? :create, Round %>  
+    <p>
+      <%= link_to 'New Round', new_game_round_path(params[:game_id]) %>
+    </p>
+  <% end %>
   <div class="grid_4 alpha">
     <h6>Round</h6>
   </div>
@@ -34,9 +45,6 @@
 
 
   <br />
-  <% if can? :create, Round %>  
-    <%= link_to 'New Round', new_game_round_path(params[:game_id]) %>
-  <% end %>
 
 </div>
 

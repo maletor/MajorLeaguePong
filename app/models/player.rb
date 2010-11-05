@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-  has_many :shots
+  has_many :shots, :dependent => :destroy
   belongs_to :team
   belongs_to :user
 

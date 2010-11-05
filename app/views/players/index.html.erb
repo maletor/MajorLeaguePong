@@ -1,6 +1,11 @@
 <div class="grid_16">
-<h3>Leaderboard</h3>
-  
+  <h3>Leaderboard</h3>
+  <% if can? :manage, Player %>
+    <p>
+      <%= link_to "New Player", new_player_path %>
+    </p>
+  <% end %>
+
   <div class="grid_6 alpha">
     <h6>Averages</h6>
   </div>
