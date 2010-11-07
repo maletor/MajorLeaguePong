@@ -39,9 +39,9 @@
     <h6><%= sortable "last_cups", "Last Cups" %></h6>
   </div>
   <div class="clear"></div>
-<% @players.each do |player| %>
+<% @players.each_with_index do |player, i| %>
   <div class="grid_3 alpha">
-    <p><%= link_to player.name, player %></p>
+    <p><%= i + 1 %>. <%= link_to player.name, player %></p>
   </div>
   <div class="grid_3">
     <p>
