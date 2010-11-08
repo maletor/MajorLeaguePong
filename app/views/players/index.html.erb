@@ -20,6 +20,20 @@
     <p><%= number_to_percentage Player.average("hit_percentage") %></p>
   </div>
   <div class="clear"></div>
+    <div class="grid_6 alpha">
+    <h6>Standard Deviation</h6>
+  </div>
+  <div class="grid_2">
+    <p><%= number_with_precision @opp_std_dev %></p>
+  </div>
+  <div class="grid_2">
+    <p><%= number_with_precision @points_std_dev %></p>
+    <h6></h6>
+  </div>
+  <div class="grid_6 omega">
+    <p><%= number_with_precision @hit_percentage_std_dev %></p>
+  </div>
+  <div class="clear"></div>
   <div class="grid_3 alpha">
     <h6><%= sortable "name" %></h6>
   </div>
@@ -32,11 +46,14 @@
   <div class="grid_2">
     <h6><%= sortable "points" %></h6>
   </div>
-  <div class="grid_3">
-    <h6><%= sortable "hit_percentage" %></h6>
+  <div class="grid_2">
+    <h6><%= sortable "hit_percentage", "Hits" %></h6>
   </div>
-  <div class="grid_3 omega">
-    <h6><%= sortable "last_cups", "Last Cups" %></h6>
+  <div class="grid_2">
+    <h6><%= sortable "shots_count", "Shots" %></h6>
+  </div>
+  <div class="grid_2 omega">
+    <h6><%= sortable "assholes" %></h6>
   </div>
   <div class="clear"></div>
 <% @players.each_with_index do |player, i| %>
@@ -58,11 +75,15 @@
   <div class="grid_2">
     <p><%= player.points %></p>
   </div>
- <div class="grid_3">
+ <div class="grid_2">
    <p><%= number_to_percentage(player.hit_percentage) %></p>
   </div> 
-  <div class="grid_3 omega">
-    <p><%= player.last_cups %></p>
+  <div class="grid_2 omega">
+    <p><%= player.shots_count %></p>
   </div>
+ <div class="grid_2">
+   <p><%= player.assholes %></p>
+  </div> 
+  
 <% end %>
 </div>

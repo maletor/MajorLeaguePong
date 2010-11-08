@@ -1,5 +1,5 @@
 class Shot < ActiveRecord::Base
-  belongs_to :player
+  belongs_to :player, :counter_cache => true
   belongs_to :game
   belongs_to :round
   belongs_to :team
@@ -21,7 +21,10 @@ class Shot < ActiveRecord::Base
   end
 
   def award_player
-    player.award(however_many) if player
+    if player
+      player.award(however_many)
+      player.assholes += 1 if is_asshole?
+    end
 
     if cup == 10
       team.update_attributes(:points => team.points += 3, :opp => team.points.to_f / (team.shots.count + 1).to_f, :wins => team.wins += 1)
@@ -45,6 +48,8 @@ class Shot < ActiveRecord::Base
   end
 
   private
+
+
 
   def however_many(cup = cup)
     if [1, 2, 3, 5, 6].include?(cup)
