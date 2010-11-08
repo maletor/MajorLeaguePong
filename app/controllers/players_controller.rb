@@ -4,6 +4,7 @@ class PlayersController < ApplicationController
 
   def index
     @players = Player.includes(:shots, :team).order("#{sort_column} #{sort_direction}")
+
     @opp_std_dev = calculate_std_dev(Player, "opp")
     @points_std_dev = calculate_std_dev(Player, "points")
     @hit_percentage_std_dev = calculate_std_dev(Player, "hit_percentage")
