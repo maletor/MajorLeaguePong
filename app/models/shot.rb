@@ -23,7 +23,6 @@ class Shot < ActiveRecord::Base
   def award_player
     if player
       player.award(however_many)
-      player.assholes += 1 if is_asshole?
     end
 
     if cup == 10

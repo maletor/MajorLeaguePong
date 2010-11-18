@@ -19,21 +19,7 @@
   <div class="grid_6 omega">
     <p><%= number_to_percentage Player.average("hit_percentage") %></p>
   </div>
-  <div class="clear"></div>
-    <div class="grid_6 alpha">
-    <h6>Standard Deviation</h6>
-  </div>
-  <div class="grid_2">
-    <p><%= number_with_precision @opp_std_dev %></p>
-  </div>
-  <div class="grid_2">
-    <p><%= number_with_precision @points_std_dev %></p>
-    <h6></h6>
-  </div>
-  <div class="grid_6 omega">
-    <p><%= number_with_precision @hit_percentage_std_dev %></p>
-  </div>
-  <div class="clear"></div>
+   <div class="clear"></div>
   <div class="grid_3 alpha">
     <h6><%= sortable "name" %></h6>
   </div>

@@ -47,6 +47,9 @@ class RoundsController < ApplicationController
   def destroy
     @game = Game.find(params[:game_id])
     @round = Round.find(params[:id])
+    # LightHouse bug #4386 => dependent => destroy called before before_destroy effectively destroy all the shots
+    # before analysis of whoever the asshole is can be done
+    @round.forgive_asshole 
     @round.destroy
 
     redirect_to(game_rounds_url(@game))
