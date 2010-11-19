@@ -1,0 +1,2 @@
+class VisualsController < ApplicationController
+end

@@ -1,0 +1,66 @@
+<div class="grid_16">
+  <div id="shots_percentage"></div>
+</div>
+<%= javascript_tag do %>
+        $(document).ready(function() {
+                new Highcharts.Chart({
+                        chart: {
+                                renderTo: 'shots_percentage',
+                                defaultSeriesType: 'column'
+				},
+				title: {
+					text: 'Shot Distribution'
+				},
+				xAxis: {
+					categories: [
+						'1', 
+						'2', 
+						'3', 
+						'4', 
+						'5', 
+						'6', 
+						'7', 
+						'8', 
+						'9', 
+						'10'
+					]
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: 'Shots'
+					}
+				},
+                                tooltip: {
+					formatter: function() {
+						return ''+
+							this.x +': '+ this.y +' mm';
+					}
+				},
+				plotOptions: {
+					column: {
+						pointPadding: 0.2,
+						borderWidth: 0
+					}
+				},
+                      series: [{
+                                  type: 'column',
+                                  name: 'Shots',
+                                  data: [
+                                          ['1',   <%= Shot.where("cup == 1").count %>],
+                                          ['2',   <%= Shot.where("cup == 2").count %>],
+                                          ['3',   <%= Shot.where("cup == 3").count %>],
+                                          ['4',   <%= Shot.where("cup == 4").count %>],
+                                          ['5',   <%= Shot.where("cup == 5").count %>],
+                                          ['6',   <%= Shot.where("cup == 6").count %>],
+                                          ['7',   <%= Shot.where("cup == 7").count %>],
+                                          ['8',   <%= Shot.where("cup == 8").count %>],
+                                          ['9',   <%= Shot.where("cup == 9").count %>],
+                                          ['10',  <%= Shot.where("cup == 10").count %>]
+                                  ]
+                          }]
+                  });
+          });
+                  
+<% end %>
+

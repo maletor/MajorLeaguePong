@@ -1,4 +1,5 @@
 MajorLeaguePong::Application.routes.draw do
+  resources :visuals
 
   match 'signup' => 'users#new', :as => :signup
 

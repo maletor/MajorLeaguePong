@@ -4,7 +4,7 @@
     <title>MajorLeaguePong</title>
     <%= stylesheet_link_tag 'reset', 'text', '960', 'application', :cache => true %>
     <%= favicon_link_tag %>
-    <%= javascript_include_tag 'jquery-1.4.3.min', 'jquery-ui-1.8.5.min', 'rails', 'application', :cache => true %>
+    <%= javascript_include_tag 'jquery-1.4.3.min', 'jquery-ui-1.8.5.min', 'highcharts-2.0.5.min', 'rails', 'application', :cache => true %>
     <%= csrf_meta_tag %>
    </head>
    <body>
@@ -31,7 +31,7 @@
        <div class="clear"></div>
        <div class="grid_16" id="navigation">
          
-       <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
+         <%= link_to_unless_current "Visuals", visuals_path %> | <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
        <% if logged_in? %>
          <% if current_user.player %>
            <%= link_to_unless_current "Edit Profile", edit_player_path(current_user.player) %> 
