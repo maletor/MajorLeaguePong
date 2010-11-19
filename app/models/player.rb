@@ -30,7 +30,7 @@ class Player < ActiveRecord::Base
           away_shots = 0
           away_shots += 1 if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, ag.away.id).count == 2
 
-          (Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes); break;) if away_shots == 1 and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.blank?
+          Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots == 1 and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.blank?
         end
       end
 
@@ -39,7 +39,7 @@ class Player < ActiveRecord::Base
           home_shots = 0
           home_shots += 1 if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, hg.home.id).count == 2
 
-          (Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes); break;) if home_shots == 1 and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.blank?
+          Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots == 1 and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.blank?
         end
       end
     end
