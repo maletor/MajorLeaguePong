@@ -15,10 +15,12 @@ class Round < ActiveRecord::Base
     shots_home = Shot.where("cup != 0 and round_id = ? and team_id = ?", self.id, self.game.home.id)
 
     if shots_away.count == 2
-      Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.away.id).first.increment(:assholes).save!
+      player = Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.away.id).first 
+      player.increment(:assholes).save! if player
     end
     if shots_home.count == 2
-      Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.home.id).first.increment(:assholes).save!
+      player = Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.home.id).first 
+      player.increment(:assholes).save! if player
     end
   end
 
@@ -27,10 +29,12 @@ class Round < ActiveRecord::Base
     shots_home = Shot.where("cup != 0 and round_id = ? and team_id = ?", self.id, self.game.home.id)
 
     if shots_away.count == 2
-      Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.away.id).first.decrement(:assholes).save!
+      player = Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.away.id).first 
+      player.decrement(:assholes).save! if player
     end
     if shots_home.count == 2
-      Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.home.id).first.decrement(:assholes).save!
+      player = Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", self.id, self.game.home.id).first 
+      player.decrement(:assholes).save! if player
     end
   end
 
