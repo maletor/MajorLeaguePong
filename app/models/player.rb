@@ -24,18 +24,30 @@ class Player < ActiveRecord::Base
   end
 
   def calculate_assholes
+    self.team.away_games.each do |ag|
+      ag.rounds.each do |r|
+        away_shots = false
+        away_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, ag.away.id).count == 2
 
+        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots
+      end
+    end
+
+    self.team.home_games.each do |hg|
+      hg.rounds.each do |r|
+        home_shots = false
+        home_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, hg.home.id).count == 2
+
+        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots
+      end
+    end
   end
 
   def team_size
     errors[:base] << "Three members per team maximum" if team.players.count > 3
   end
 
-  def award
-    calculate_points
-    calculate_opp
-    calculate_hit_percentage
-    save!
+  def award(var)
   end
   
   def punish(however_many)
