@@ -29,7 +29,7 @@ class Player < ActiveRecord::Base
         away_shots = false
         away_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, ag.away.id).count == 2
 
-        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots
+        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.blank?
       end
     end
 
@@ -38,7 +38,7 @@ class Player < ActiveRecord::Base
         home_shots = false
         home_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, hg.home.id).count == 2
 
-        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots
+        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.blank?
       end
     end
   end
