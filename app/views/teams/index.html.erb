@@ -6,6 +6,17 @@
     </p>
   <% end %>
 <div class="clear"></div>
+  <div class="grid_4 alpha">
+    <h6>Averages</h6>
+  </div>
+  <div class="grid_3">
+    <p><%= number_with_precision Team.average("opp") %></p>
+  </div>
+  <div class="grid_9 omega">
+    <p><%= number_with_precision Team.average("points") %></p>
+    <h6></h6>
+  </div>
+   <div class="clear"></div>
 <div class="grid_4 alpha">
   <h6><%= sortable "name" %></h6>
 </div>

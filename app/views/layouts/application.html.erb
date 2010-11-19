@@ -31,7 +31,7 @@
        <div class="clear"></div>
        <div class="grid_16" id="navigation">
          
-         <%= link_to_unless_current "Visuals", visuals_path %> | <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
+         <%= link_to_unless_current "Graphs", visuals_path %> | <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
        <% if logged_in? %>
          <% if current_user.player %>
            <%= link_to_unless_current "Edit Profile", edit_player_path(current_user.player) %> 
