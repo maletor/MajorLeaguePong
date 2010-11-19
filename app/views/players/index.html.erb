@@ -6,41 +6,27 @@
     </p>
   <% end %>
 
-  <div class="grid_6 alpha">
     <h6>Averages</h6>
-  </div>
-  <div class="grid_2">
     <p><%= number_with_precision Player.average("opp") %></p>
-  </div>
-  <div class="grid_2">
     <p><%= number_with_precision Player.average("points") %></p>
     <h6></h6>
-  </div>
-  <div class="grid_6 omega">
     <p><%= number_to_percentage Player.average("hit_percentage") %></p>
-  </div>
    <div class="clear"></div>
-  <div class="grid_3 alpha">
-    <h6><%= sortable "name" %></h6>
-  </div>
-  <div class="grid_3">
-    <h6><%= sortable "teams.name", "Team" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "opp", "Overall" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "points" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "hit_percentage", "Hits" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "shots_count", "Shots" %></h6>
-  </div>
-  <div class="grid_2 omega">
-    <h6><%= sortable "assholes" %></h6>
-  </div>
+   <table id="hor-zebra" summary="Major League Pong Leaderboard">
+   <thead>
+  <tr>
+    <th scope="col"><%= sortable "name" %></th>
+    <th scope="col"><%= sortable "teams.name", "Team" %></th>
+    <th scope="col"><%= sortable "opp", "Overall" %></th>
+    <th scope="col"><%= sortable "points" %></th>
+    <th scope="col"><%= sortable "hit_percentage", "Hits" %></th>
+    <th scope="col"><%= sortable "shots_count", "Shots" %></th>
+    <th scope="col"><%= sortable "assholes" %></th>
+  </tr>
+</thead>
+<tbody>
+</tbody>
+</table>
   <div class="clear"></div>
 <% @players.each_with_index do |player, i| %>
   <div class="grid_3 alpha">
