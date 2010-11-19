@@ -24,21 +24,23 @@ class Player < ActiveRecord::Base
   end
 
   def calculate_assholes
-    self.team.away_games.each do |ag|
-      ag.rounds.each do |r|
-        away_shots = false
-        away_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, ag.away.id).count == 2
+    if self.team
+      self.team.away_games.each do |ag|
+        ag.rounds.each do |r|
+          away_shots = false
+          away_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, ag.away.id).count == 2
 
-        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.blank?
+          Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.increment!(:assholes) if away_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, ag.away.id).first.blank?
+        end
       end
-    end
 
-    self.team.home_games.each do |hg|
-      hg.rounds.each do |r|
-        home_shots = false
-        home_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, hg.home.id).count == 2
+      self.team.home_games.each do |hg|
+        hg.rounds.each do |r|
+          home_shots = false
+          home_shots = true if Shot.where("cup != 0 and round_id = ? and team_id = ?", r.id, hg.home.id).count == 2
 
-        Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.blank?
+          Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.increment!(:assholes) if home_shots and not Player.includes(:shots).where("shots.cup == 0 and shots.round_id = ? and shots.team_id = ?", r.id, hg.home.id).first.blank?
+        end
       end
     end
   end
