@@ -11,6 +11,11 @@
       <% end %>
   </p>
 
+<div class="clear"></div>
+<div class="grid_16">
+  <div id="game_opp"></div>
+</div>
+
   <hr />
   <%= RedCloth.new(@player.profile).to_html.html_safe  %>
   <p>
@@ -22,3 +27,48 @@
     <% end %>
   </p>
 </div>
+
+
+<%= javascript_tag do %>
+$(document).ready(function() {
+	new Highcharts.Chart({
+		chart: {
+			renderTo: 'game_opp',
+			defaultSeriesType: 'line'
+		},
+		title: {
+			text: 'Overall Per Game'
+		},
+		xAxis: {
+                  categories: <%= raw @player.games.collect { |g| g.id } %>
+		},
+		yAxis: {
+			title: {
+				text: 'Overall'
+			}
+		},
+		tooltip: {
+			enabled: false,
+			formatter: function() {
+				return '<strong>'+ this.series.name +'</strong><br />'+
+					this.x +': '+ this.y;
+			}
+		},
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: true
+				},
+				enableMouseTracking: false
+			}
+		},
+		series: [{
+			name: 'Performance',
+                        data: <%= raw @player.games.collect { |g| number_with_precision(@player.overall_per_game(g)).to_f } %>
+		}]
+	});
+	
+	
+});
+                          
+<% end %>
