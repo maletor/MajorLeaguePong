@@ -40,7 +40,7 @@ $(document).ready(function() {
 			text: 'Overall Per Game'
 		},
 		xAxis: {
-                  categories: <%= raw @player.games.collect { |g| g.id } %>
+                  categories: <%= raw @player.games.sort { |x, y| x.time <=> y.time }.collect { |g| g.time.to_s(:short) } %>
 		},
 		yAxis: {
 			title: {
