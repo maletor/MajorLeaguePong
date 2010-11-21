@@ -48,19 +48,27 @@ $(document).ready(function() {
 			}
 		},
 		tooltip: {
-			enabled: false,
+			enabled: true,
 			formatter: function() {
-				return '<strong>'+ this.series.name +'</strong><br />'+
-					this.x +': '+ this.y;
+				return this.x +': '+ this.y;
 			}
 		},
 		plotOptions: {
+series: {
+            cursor: 'pointer',
+            events: {
+                click: function(event) {
+                window.location.replace("<%=  %>");
+                }
+            }
+        },
+                
 			line: {
 				dataLabels: {
 					enabled: true
 				},
 				enableMouseTracking: false
-			}
+			}                        
 		},
 		series: [{
 			name: 'Performance',
