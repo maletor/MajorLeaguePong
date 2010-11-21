@@ -1,5 +1,6 @@
 <div class="grid_16">
   <h3>Leaderboard</h3>
+  <div class="clear"></div>
   <div class="grid_6 alpha">
     <h6>Averages</h6>
   </div>
@@ -13,7 +14,7 @@
   <div class="grid_6 omega">
     <p><%= number_to_percentage Player.average("hit_percentage") %></p>
   </div>
-   <div class="clear"></div>
+  <div class="clear"></div>
   <div class="grid_3 alpha">
     <h6><%= sortable "name" %></h6>
   </div>
@@ -36,42 +37,41 @@
     <h6><%= sortable "assholes" %></h6>
   </div>
   <div class="clear"></div>
-<% @players.each_with_index do |player, i| %>
-  <div class="grid_3 alpha">
-    <p><%= i + 1 %>. <%= link_to player.name, player %></p>
-  </div>
-  <div class="grid_3">
-    <p>
-      <% if player.team %>
-        <%= link_to(player.team.name, player.team) %>
-      <% else %>
-        Free Agent 
-      <% end %>
-    </p>
-  </div>
-  <div class="grid_2">
-    <p><%= number_with_precision player.opp %></p>
-  </div>
-  <div class="grid_2">
-    <p><%= player.points %></p>
-  </div>
- <div class="grid_2">
-   <p><%= number_to_percentage(player.hit_percentage) %></p>
-  </div> 
-  <div class="grid_2">
-    <p><%= player.shots_count %></p>
-  </div>
- <div class="grid_2 omega">
-   <p><%= player.assholes %></p>
-  </div> 
-  
-<% end %>
-<div class="clear"></div>
+  <% @players.each_with_index do |player, i| %>
+    <div class="grid_3 alpha">
+      <p><%= i + 1 %>. <%= link_to player.name, player %></p>
+    </div>
+    <div class="grid_3">
+      <p>
+        <% if player.team %>
+          <%= link_to(player.team.name, player.team) %>
+        <% else %>
+          Free Agent 
+        <% end %>
+      </p>
+    </div>
+    <div class="grid_2">
+      <p><%= number_with_precision player.opp %></p>
+    </div>
+    <div class="grid_2">
+      <p><%= player.points %></p>
+    </div>
+    <div class="grid_2">
+      <p><%= number_to_percentage(player.hit_percentage) %></p>
+    </div> 
+    <div class="grid_2">
+      <p><%= player.shots_count %></p>
+    </div>
+    <div class="grid_2 omega">
+      <p><%= player.assholes %></p>
+    </div> 
+
+  <% end %>
+  <div class="clear"></div>
   <% if can? :manage, Player %>
     <p>
       <%= link_to "New Player", new_player_path %>
     </p>
   <% end %>
-
-
 </div>
+

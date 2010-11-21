@@ -1,12 +1,6 @@
 <div class="grid_16">
   <h3>Schedule</h1>
-  <% if can? :manage, Game %>
-    <p>
-      <%= link_to "Schedule a New Game", new_game_path %>
-    </p>
-  <% end %>
-
-  <div class="grid_4 alpha">
+   <div class="grid_4 alpha">
     <h6><%= sortable "time" %></h6>
   </div>
   <div class="grid_4">
@@ -47,5 +41,11 @@
     </div>
     <div class="clear"></div>
   <% end %>
+ <% if can? :manage, Game %>
+    <p>
+      <%= link_to "Schedule a New Game", new_game_path %>
+    </p>
+  <% end %>
+
 
 </div>

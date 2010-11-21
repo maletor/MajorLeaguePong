@@ -6,6 +6,20 @@ class Team < ActiveRecord::Base
   has_many :players
   accepts_nested_attributes_for :players
 
+  def points_per_game(game)
+    points = 0
+    self.shots.where(:game_id => game.id).each do |s|
+      points += 3 if s.cup == 10
+      points += 2 if [4, 7, 8, 9].include?(s.cup)
+      points += 1 if [1, 2, 3, 5, 6].include?(s.cup)
+    end
+    points
+  end
+
+  def overall_per_game(game)
+    self.shots.where(:game_id => game.id).count.zero? ? 0 : points_per_game(game).to_f / self.shots.where(:game_id => game.id).count.to_f
+  end
+
   def games
     home_games + away_games
   end
