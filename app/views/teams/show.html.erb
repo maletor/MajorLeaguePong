@@ -2,9 +2,7 @@
 <p>
   <h3><%= @team.name %></h3>
 </p>
-<div class="grid_16">
-  <div id="game_opp"></div>
-</div>
+
 
 <p>
   <% @team.players.each do |player| %>
@@ -21,7 +19,10 @@
     <% end %>
   </p>
 </div>
-
+<div class="clear"></div>
+<div class="grid_16">
+  <div id="game_opp"></div>
+</div>
 
 
 <%= javascript_tag do %>
