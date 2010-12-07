@@ -7,6 +7,9 @@ class Game < ActiveRecord::Base
 
   has_and_belongs_to_many :players
   
+  def players
+    self.home.players + self.away.players
+  end
   def winner
     shots.each do |s|
       return s.player.team if s.cup == 10
