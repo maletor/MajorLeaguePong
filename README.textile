@@ -1,4 +1,3 @@
 h1. MajorLeaguePong
-h4. Have a good time
 
 h3. Have a clear fucking hierarchy
