@@ -1,4 +1,4 @@
 h1. MajorLeaguePong
-All kinds of changes
+h4. Have a good time
 
 h3. Have a clear fucking hierarchy
