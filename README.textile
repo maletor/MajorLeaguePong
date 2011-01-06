@@ -1,12 +1,3 @@
 h1. MajorLeaguePong
 
 h3. Have a clear fucking hierarchy
-
-h6. Bugs
-
-Free Agents cannot temporarily belong to a team, such that the points they make do not contriubte towards the overall teams.
-
-This is related to team OPP. A teams OPP should be calculated as total point made by team members and free agents playing that game / total shots by team members and free agents shots on a per game basis.
-
-Changing attributes for a shot does not correctly update player objects
-
