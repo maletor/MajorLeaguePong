@@ -1,0 +1,17 @@
+<% 6.times { f.object.shots.build } if f.object.new_record? -%>
+<tr>
+  <td>
+    <%= f.text_field :number, :size => 3 %>
+  </td>
+
+  <% i = 0 -%>
+  <%= f.fields_for :shots do |shot_form| %>
+    <%= render :partial => 'shot_fields', :locals => { :f => shot_form, :i => i } %>
+    <% i += 1 -%>
+  <% end -%>
+
+  <td>
+    <%= f.check_box(:_destroy) %>
+    <%= f.hidden_field :id %>
+  </td>
+</tr>

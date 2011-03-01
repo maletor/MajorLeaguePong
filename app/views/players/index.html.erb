@@ -1,77 +1,32 @@
-<div class="grid_16">
-  <h3>Leaderboard</h3>
-  <div class="clear"></div>
-  <div class="grid_6 alpha">
-    <h6>Averages</h6>
-  </div>
-  <div class="grid_2">
-    <p><%= number_with_precision Player.average("opp") %></p>
-  </div>
-  <div class="grid_2">
-    <p><%= number_with_precision Player.average("points") %></p>
-    <h6></h6>
-  </div>
-  <div class="grid_6 omega">
-    <p><%= number_to_percentage Player.average("hit_percentage") %></p>
-  </div>
-  <div class="clear"></div>
-  <div class="grid_3 alpha">
-    <h6><%= sortable "name" %></h6>
-  </div>
-  <div class="grid_3">
-    <h6><%= sortable "teams.name", "Team" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "opp", "Overall" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "points" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "hit_percentage", "Hits" %></h6>
-  </div>
-  <div class="grid_2">
-    <h6><%= sortable "shots_count", "Shots" %></h6>
-  </div>
-  <div class="grid_2 omega">
-    <h6><%= sortable "assholes" %></h6>
-  </div>
-  <div class="clear"></div>
-  <% @players.each_with_index do |player, i| %>
-    <div class="grid_3 alpha">
-      <p><%= i + 1 %>. <%= link_to player.name, player %></p>
-    </div>
-    <div class="grid_3">
-      <p>
-        <% if player.team %>
-          <%= link_to(player.team.name, player.team) %>
-        <% else %>
-          Free Agent 
-        <% end %>
-      </p>
-    </div>
-    <div class="grid_2">
-      <p><%= number_with_precision player.opp %></p>
-    </div>
-    <div class="grid_2">
-      <p><%= player.points %></p>
-    </div>
-    <div class="grid_2">
-      <p><%= number_to_percentage(player.hit_percentage) %></p>
-    </div> 
-    <div class="grid_2">
-      <p><%= player.shots_count %></p>
-    </div>
-    <div class="grid_2 omega">
-      <p><%= player.assholes %></p>
-    </div> 
+<table>
+  <thead>
+    <tr> 
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Hits</th>
+      <th>Shots</th>
+      <th>Points</th>
+      <th>Overall</th>
+      <th>Assholes</th>
+      <th>Suicides</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each_with_index do |player, i| -%>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= link_to player.user.username, user_path(player.user) %></td>
+        <td><%= player.shots.where("cup != 0").count %></td>
+        <td><%= player.shots.count %></td>
+        <td><%= player.points %></td>
+        <td><strong><%= number_with_precision player.opp %></strong></td>
+        <td><%= player.assholes %></td>
+        <td><%= player.suicides %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
 
-  <% end %>
-  <div class="clear"></div>
-  <% if can? :manage, Player %>
-    <p>
-      <%= link_to "New Player", new_player_path %>
-    </p>
-  <% end %>
-</div>
-
+<% if can? :manage, Player -%>
+  <p><%= link_to "New Player", new_player_path %></p>
+<% end -%>

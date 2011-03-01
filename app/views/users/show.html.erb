@@ -1,0 +1,15 @@
+<div class="span-17 colborder">
+  <h3><%= @user.username %></h3>
+  <% if @user == current_user -%>
+    <p><%= link_to "edit profile", edit_user_path(@user) %></p>
+  <% end -%>
+  <p>
+    <h6><%= @user.player && @user.player.team ? link_to(@user.player.team.name, @user.player.team) : "Free Agent" %></h6>
+  </p>
+</div>
+
+<div class="span-6 last">
+  <p class="right">
+    <%= image_tag @user.player.avatar.url(:thumb) %>
+  </p>
+</div>

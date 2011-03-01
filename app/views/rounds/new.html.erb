@@ -1,7 +1,8 @@
-<div class="grid_16">
-<h3>New round</h3>
-<p>Select Player "None" for bring backs and end of game "no shots"</p>
+<h2>
+  <%= "#{@game.away.name} at #{@game.home.name}" %>
+</h2>
+<h4>
+  <%= @game.time.to_s(:long) %>
+</h4>
 
-<%= render :partial => 'form', :locals => { :edit => false } %>
-
-</div>
+<%= render 'form' %>

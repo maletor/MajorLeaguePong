@@ -4,53 +4,31 @@ class Shot < ActiveRecord::Base
   belongs_to :round
   belongs_to :team
 
-  after_save :award_player
-  before_destroy :punish_player
-  before_update :process_update
+  after_create :award_player
+  #before_destroy :punish_player
+  #before_update :process_change
 
-  def process_update
+  def process_change
     if player_id_changed? and not cup_changed?
-      Player.find(player_id_change[0]).punish(however_many)
+      Player.find(player_id_change[0]).punish(to_points)
     end
     if cup_changed? and not player_id_changed?
-      player.punish(however_many)
+      player.punish(to_points)
     end
     if player_id_changed? and cup_changed?
-      Player.find(player_id_change[0]).punish(however_many(cup_change[0]))
+      Player.find(player_id_change[0]).punish(to_points(cup_change[0]))
     end
   end
 
   def award_player
-    if player
-      player.award(however_many)
-    end
-
-    if cup == 10
-      team.update_attributes(:points => team.points += 3, :opp => team.points.to_f / (team.shots.count + 1).to_f, :wins => team.wins += 1)
-      losing_team = team == game.away ? game.home : game.away
-      losing_team.update_attributes(:losses => losing_team.losses += 1)
-    else
-      team.update_attributes(:points => team.points += however_many, :opp => team.points.to_f / (team.shots.count + 1).to_f)
-    end
+    player.award(self) unless self.cup.nil?
   end
 
   def punish_player
-    player.punish(however_many) if player
-
-    if cup == 10
-      team.update_attributes(:points => team.points -= 3, :opp => team.points.to_f / (team.shots.count + 1).to_f, :wins => team.wins -= 1)
-      losing_team = team == game.away ? game.home : game.away
-      losing_team.update_attributes(:losses => losing_team.losses -= 1)
-    else
-      team.update_attributes(:points => team.points -= however_many, :opp => team.points.to_f / (team.shots.count + 1).to_f)
-    end
+    player.punish(self) unless self.cup.nil?
   end
 
-  private
-
-
-
-  def however_many(cup = cup)
+  def to_points
     if [1, 2, 3, 5, 6].include?(cup)
       1
     elsif [4, 7, 8, 9].include?(cup) 
@@ -61,5 +39,4 @@ class Shot < ActiveRecord::Base
       0
     end
   end
-
 end

@@ -1,6 +1,7 @@
 class PlayersController < ApplicationController
   load_and_authorize_resource
   helper_method :sort_column, :sort_direction  
+  skip_before_filter :login_required, only: [:index, :show]
 
   def index
     @players = Player.includes(:shots, :team).order("#{sort_column} #{sort_direction}")
@@ -16,13 +17,14 @@ class PlayersController < ApplicationController
 
   def edit
     @player = Player.find(params[:id])
+    @user = @player.user
   end
 
   def create
     @player = Player.new(params[:player])
 
     if @player.save
-      redirect_to(@player, :notice => 'Player was successfully created.')
+      redirect_to(@player, :flash => { :success => 'Player was successfully created.' })
     else
       render :action => "new" 
     end
@@ -32,7 +34,7 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     if @player.update_attributes(params[:player])
-      redirect_to(@player, :notice => 'Player was successfully updated.') 
+      redirect_to(@player, :flash => { :success => 'Player was successfully updated.' }) 
     else
       render :action => "edit" 
     end

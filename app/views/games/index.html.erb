@@ -1,51 +1,24 @@
-<div class="grid_16">
-  <h3>Schedule</h1>
-   <div class="grid_4 alpha">
-    <h6><%= sortable "time" %></h6>
-  </div>
-  <div class="grid_4">
-    <h6>Away</h6>
-  </div>
-  <div class="grid_4">
-    <h6>Home</h6>
-  </div>
-  <div class="grid_4 omega">
-    <h6>Rounds</h6>
-  </div>
-  <div class="clear"></div>
+<table>
+  <thead>
+    <tr> 
+      <th>Time</th>
+      <th>Away</th>
+      <th>Home</th>
+      <th>Rounds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @games.each do |game| -%>
+      <tr>
+        <td><%= link_to game.time.to_s(:short), game %></td>
+        <td><%= link_to game.away.name, team_path(game.away) %></td>
+        <td><%= link_to game.home.name, team_path(game.home) %></td>
+        <td><%= game.rounds.count %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
 
-  <% @games.each do |game| %>
-    <div class="grid_4 alpha">
-      <p><%= link_to game.time.to_s(:short), game_rounds_path(game) %></p>
-    </div>
-    <div class="grid_4">
-      <p>
-        <% if game.away == game.winner %>
-          <strong><%= game.away.name %></strong>
-        <% else %>
-          <%= game.away.name %>
-        <% end %>
-      </p>
-    </div>
-    <div class="grid_4">
-      <p>
-        <% if game.home == game.winner %>
-          <strong><%= game.home.name %></strong>
-        <% else %>
-          <%= game.home.name %>
-        <% end %>
-      </p>
-    </div>
-    <div class="grid_4 omega">
-      <p><%= game.rounds.count %></p>
-    </div>
-    <div class="clear"></div>
-  <% end %>
- <% if can? :manage, Game %>
-    <p>
-      <%= link_to "Schedule a New Game", new_game_path %>
-    </p>
-  <% end %>
-
-
-</div>
+<% if can? :manage, Game -%>
+  <p><%= link_to "New Game", new_game_path %></p>
+<% end -%>

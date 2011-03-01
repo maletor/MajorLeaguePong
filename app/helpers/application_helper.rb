@@ -1,8 +1,23 @@
 module ApplicationHelper
-  def fucking_advice
-    ["Fucking ideate", "Use more fucking white space", "Fucking start over", "Read the fucking copy", "Capitalize on the fucking experience", "Use fucking alignment", "Less if fucking more", "Learn from your fucking mistakes", "There is no fucking box", "Pay attention to fucking detail", "Think fucking laterally", "Quit your fucking job", "Write a fucking design brief", "Consider your fucking user", "Fucking do it again", "Sans-fucking-serif", "Fucking experiement", "Get over your fucking self", "Work outside of your fucking habits", "Do it right the first fucking time", "Give a damn", "Learn from your fucking peers", "Love your job", "Fucking simplify", "Take a fucking chance", "Educate your client", "Be a good fucking person", "Don't be trendy", "Have a clear fucking hierarchy"]
+  def render_shot(shot)
+    return "" if shot.cup == 0
+    return "No Shot" if shot.cup.nil?    
+    return "Suicide" if shot.cup == 11
+    return shot.cup
   end
 
+  def link_to_remove_fields(name, f)
+    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(this)")
+  end
+
+  def link_to_add_fields(name, f, association)
+    new_object = f.object.class.reflect_on_association(association).klass.new
+    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+      render(association.to_s.singularize + "_fields", :f => builder)
+    end
+    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
+  end
+ 
   def sortable(column, title = nil)
     title ||= column.titleize
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"

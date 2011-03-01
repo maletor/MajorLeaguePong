@@ -30,3 +30,19 @@ function _loadUserVoice() {
 }
 _loadSuper = window.onload;
 window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+
+function add_fields(link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g");
+  $("table tbody").append(content.replace(regexp, new_id));
+  var inputs = $(".sortable tbody input[type='text']");
+  var last_round_number = parseInt(inputs.eq(inputs.length - 2).val());
+  if (isNaN(last_round_number)) {
+    inputs.last().attr("value", 1);
+  } else {
+    inputs.last().attr("value", last_round_number + 1);
+  }
+}
+
+//$(document).ready(function() {
+//});

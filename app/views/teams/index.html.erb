@@ -1,66 +1,33 @@
-<div class="grid_16">
-  <h3>Teams</h3>
+<table>
+  <thead>
+    <tr> 
+      <th>Name</th>
+      <th>Hits</th>
+      <th>Shots</th>
+      <th>Points</th>
+      <th>Overall</th>
+      <th>Assholes</th>
+      <th>Suicides</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team| -%>
+      <tr>
+        <td><%= link_to team.name, team %></td>
+        <td><%= team.shots.where("cup != 0").count %></td>
+        <td><%= team.shots.count %></td>
+        <td><%= team.points %></td>
+        <td><strong><%= number_with_precision team.opp %></strong></td>
+        <td><%= team.players.sum(:assholes) %></td>
+        <td><%= team.players.sum(:suicides) %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
 
-<div class="clear"></div>
-  <div class="grid_4 alpha">
-    <h6>Averages</h6>
-  </div>
-  <div class="grid_3">
-    <p><%= number_with_precision Team.average("opp") %></p>
-  </div>
-  <div class="grid_9 omega">
-    <p><%= number_with_precision Team.average("points") %></p>
-    <h6></h6>
-  </div>
-   <div class="clear"></div>
-<div class="grid_4 alpha">
-  <h6><%= sortable "name" %></h6>
-</div>
-<div class="grid_3">
-  <h6><%= sortable "opp", "Overall" %></h6>
-</div>
-<div class="grid_3">
-  <h6><%= sortable "points" %></h6>
-</div>
-<div class="grid_3">
-  <h6><%= sortable "wins" %></h6>
-</div>
-<div class="grid_3 omega">
-  <h6><%= sortable "losses" %></h6>
-</div>
-<div class="clear"></div>
-<% @teams.each_with_index do |team| %>
-  <div class="grid_4 alpha">
-    <p>
-      <%= link_to team.name, team_path(team) %>
-    </p>
-  </div>
-   <div class="grid_3">
-    <p>
-      <%= number_with_precision team.opp %>
-    </p>
-  </div>
-  <div class="grid_3">
-    <p>
-      <%= team.points %>
-    </p>
-  </div>
- 
-  <div class="grid_3">
-    <p>
-      <%= team.wins %>
-    </p>
-  </div>
-  <div class="grid_3 omega">
-    <p>
-      <%= team.losses %>
-    </p>
-  </div>
-  <div class="clear"></div>
-<% end %>
-<% if can? :manage, Team %>
-    <p>
-      <%= link_to "New Team", new_team_path %>
-    </p>
-  <% end %>
-</div>
+<% if can? :manage, Team -%>
+  <p><%= link_to "New Team", new_team_path %></p>
+<% end -%>
+
+
+

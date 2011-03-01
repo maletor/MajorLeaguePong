@@ -8,12 +8,13 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    flash.now[:info] = "This game has not yet been scored." if @game.rounds.blank?
   end
 
   def new
     @game = Game.new
   end
-
+    
   def edit
     @game = Game.find(params[:id])
   end
@@ -22,7 +23,7 @@ class GamesController < ApplicationController
     @game = Game.new(params[:game])
 
     if @game.save
-      redirect_to(game_rounds_path(@game), :notice => 'Game was successfully created.') 
+      redirect_to(games_path, :flash => { :success => 'Game was successfully created.' })
     else
       render :action => "new" 
     end
@@ -32,7 +33,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
 
     if @game.update_attributes(params[:game])
-      redirect_to(@game, :notice => 'Game was successfully updated.')
+      redirect_to(@game, :flash => { :success => 'Game was successfully updated.' })
     else
       render :action => "edit"
     end

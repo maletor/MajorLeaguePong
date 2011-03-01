@@ -23,7 +23,7 @@ class TeamsController < ApplicationController
     @team = Team.new(params[:team])
 
     if @team.save
-      redirect_to(@team, :notice => 'Team was successfully created.')
+      redirect_to(@team, :flash => { :success => 'Team was successfully created.' })
     else
       render :action => "new"
     end
@@ -33,7 +33,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
 
     if @team.update_attributes(params[:team])
-      redirect_to(@team, :notice => 'Team was successfully updated.')
+      redirect_to(@team, :flash => { :success => 'Team was successfully updated.' })
     else
       render :action => "edit"
     end

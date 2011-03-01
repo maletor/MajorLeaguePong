@@ -1,15 +1,22 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+  skip_before_filter :login_required, :only => [:new, :create]
+
+  def show
+    @user = User.find(params[:id])
+  end
 
   def new
-    @user = User.new
+    @user = User.new(:invitation_token => params[:invitation_token])
+    player = @user.build_player
+
+    #redirect_to(login_url, :flash => { :error => "You must be invited to sign up." })
   end
 
   def create
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      flash[:notice] = "Thank you for signing up! You are now logged in."
+      flash[:success] = "Thank you for signing up. You are now logged in."
       redirect_to "/"
     else
       render :action => 'new'
@@ -18,13 +25,13 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    @player = @user.player
   end
 
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      flash[:notice] = "Your profile has been updated."
-      redirect_to "/"
+      redirect_to(@user.player, :flash => { :success => 'Player was successfully updated.' }) 
     else
       render :action => 'edit'
     end

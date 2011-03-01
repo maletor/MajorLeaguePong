@@ -23,6 +23,7 @@ class ShotsController < ApplicationController
   def create
     @game = Game.find(params[:game_id])
     @shot = @game.shots.new(params[:shot])
+    @shot.game = @game
 
     if @shot.save
       redirect_to(game_shots_path(@game), :notice => 'Shot was successfully created.')

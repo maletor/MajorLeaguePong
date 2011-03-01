@@ -1,10 +1,36 @@
-<p id="notice"><%= notice %></p>
+<h2>
+  <%= "#{@game.away.name} at #{@game.home.name}" %>
+</h2>
+<h4>
+  <%= @game.time.to_s(:long) %>
+</h4>
 
-<p>
-  <b>Time:</b>
-  <%= @game.time %>
-</p>
+<% unless @game.rounds.blank? -%>
+<table>
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th><%= @game.away_players[0].name %></th>
+      <th><%= @game.away_players[1].name %></th>
+      <th><%= @game.away_players[2].name %></th>
+      <th><%= @game.home_players[0].name %></th>
+      <th><%= @game.home_players[1].name %></th>
+      <th><%= @game.home_players[2].name %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @game.rounds.each do |round| -%>
+      <tr>
+        <td><%= round.number %></td>
+        <% round.shots.each do |shot| -%>
+          <td><%= render_shot(shot) %></td>
+        <% end -%>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+<% end -%>
 
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<% if can? :manage, Round -%>
+  <p><%= link_to "Score Game", new_game_round_path(@game) %></p>
+<% end -%>

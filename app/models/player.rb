@@ -3,7 +3,14 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   has_many :games
-  has_and_belongs_to_many :games
+  has_and_belongs_to_many :home_games, :class_name => "Game"
+  has_and_belongs_to_many :away_games, :class_name => "Game"
+
+  has_attached_file :avatar, :default_url => "/images/missing.gif", :styles => { :thumb => "230x230>" }
+
+  def to_param
+    "#{id}-#{user.username}"
+  end
 
   def points_per_game(game)
     points = 0
@@ -65,18 +72,26 @@ class Player < ActiveRecord::Base
     errors[:base] << "Three members per team maximum" if team.players.count > 3
   end
 
-  def award(however_many)
-    points = self.points += however_many
-    self.points = points
-    self.opp = (points.to_f / self.shots.count.to_f)
-    self.hit_percentage = self.shots.count.zero? ? 0 : self.hit_percentage = (self.shots.where("cup != 0").count.to_f / self.shots.count.to_f) * 100
+  def award(shot)
+    unless shot.cup == 11
+      self.hit_count += 1 unless shot.cup.zero?
+      self.points += shot.to_points
+      self.opp = points.to_f / self.shots.where(:cup => 0..10).count.to_f
+      self.hit_percentage = hit_count.to_f / self.shots.where(:cup => 0..10).count.to_f
+    else
+      self.suicides += 1
+    end
     save!
   end
-  def punish(however_many)
-    points = self.points -= however_many
-    self.points = points
-    self.opp = (points.to_f / self.shots.count.to_f)
-    self.hit_percentage = self.shots.count == 0 ? self.hit_percentage = (self.shots.where("cup != 0").count.to_f / self.shots.count.to_f) * 100 : 0
+
+  def punish(shot)
+    unless shot.cup == 11
+      player_points = points - shot.to_points
+      self.points = player_points
+      self.opp = (player_points.to_f / self.shots.count.to_f)
+    else
+      self.suicides -= 1
+    end
     save!
   end
 

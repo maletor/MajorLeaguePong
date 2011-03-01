@@ -1,36 +1,52 @@
-<%= form_for(@player) do |f| %>
-  <% if @player.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
+<% if @user.errors.any? %>
+  <div id="error">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this round from being saved:</h2>
 
-      <ul>
-        <% @player.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %> 
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :team_id %><br />
-    <%= f.select :team_id, Team.all.collect {|t| [ t.name, t.id ] }, { :include_blank => "Free Agent" } %>
-  </div>
-  <div class="field">
-    <%= f.label :profile %><br />
-    <%= f.text_area :profile %>
-  </div>
-  <% if can? :assign_users, @player %>
-    <div class="field">
-      <%= f.label :user_id %>
-      <%= f.select :user_id, User.all.collect { |u| [ u.username, u.id ] }, { :include_blank => "None" } %>
-    </div>
-  <% end %>
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+  <%= field_set_tag "Account Details" do %>
+    <p>
+      <%= f.label :username %><br />
+      <%= f.text_field :username, :class => 'title' %>
+    </p>
+    <p>
+      <%= f.label :email, "Email Address" %><br />
+      <%= f.email_field :email, :class => 'text' %>
+    </p>
+    <p>
+      <%= f.label :password %><br />
+      <%= f.password_field :password, :class => 'text' %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation, "Confirm Password" %><br />
+      <%= f.password_field :password_confirmation, :class => 'text' %>
+    </p>
+  <% end -%>
+  <%= field_set_tag "Player Details" do %>
+    <%= f.fields_for :player do |g| -%>
+      <p>
+        <%= g.label :name, "Real Name" %><br />
+        <%= g.text_field :name, :class => 'title' %>
+      </p>
+      <p>
+        <%= g.label :avatar %><br />
+        <%= g.file_field :avatar %>
+        <%= g.hidden_field :team_id %>
+      </p>
+      <p>
+        <%= g.label :profile %><br />
+        <%= g.text_area :profile %>
+      </p>
+    <% end -%>
+  <% end -%>
+    <p><%= f.submit %></p>
+<%= f.hidden_field :invitation_token %>
+<% end -%>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

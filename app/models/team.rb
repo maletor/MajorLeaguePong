@@ -2,9 +2,14 @@ class Team < ActiveRecord::Base
   has_many :home_games, :class_name => 'Game', :foreign_key => 'home_id'
   has_many :away_games, :class_name => 'Game', :foreign_key => 'away_id'
   has_many :shots
+  has_many :invitations
 
   has_many :players
   accepts_nested_attributes_for :players
+
+  def to_param
+    "#{id}-#{name.gsub(/ /,"-")}"
+  end
 
   def points_per_game(game)
     points = 0

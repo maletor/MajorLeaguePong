@@ -1,54 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>MajorLeaguePong</title>
-    <%= stylesheet_link_tag 'reset', 'text', '960', 'application', :cache => true %>
-    <%= favicon_link_tag %>
-    <%= javascript_include_tag 'jquery-1.4.4.min', 'highcharts-2.0.5.min', 'rails', 'application', :cache => true %>
+    <%= stylesheet_link_tag 'screen', :media => "screen, projection" %>
+    <%= stylesheet_link_tag 'print', :media => "print" %>
+    <!--[if lt IE 8]>
+    <%= stylesheet_link_tag 'ie', :media => "screen, projection" %>
+    <![endif]-->
+    <%= stylesheet_link_tag 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/black-tie/jquery-ui.css', 'application' %>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" %>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" %>
+    <%= javascript_include_tag 'highcharts-2.1.3.min', 'rails', 'application', :cache => true %>
     <%= csrf_meta_tag %>
-   </head>
-   <body>
-     <div class="container_16">
-       <div class="grid_16" id="logo">
-         <div class="grid_4 alpha">
-           <%= link_to (image_tag "BeerPongLogo.jpg", :alt => "Major League Pong", :width => 220), players_path %>
-         </div>
-         <div class="grid_12 alpha omega">
-           <div class="grid_12 omega">
-             <h1>Major League Pong</h1>
-             <h6><%= fucking_advice[rand(fucking_advice.size)] %></h6>
-           </div>
-           <div class="clear"></div>
-           <div class="grid_12 omega">
-             <% if logged_in? and current_user.player %>
-               <p>
-                 Welcome <%= current_user.player.name %>
-               </p>
-             <% end %>
-           </div>
-         </div>
-       </div>
-       <div class="clear"></div>
-       <div class="grid_16" id="navigation">
-         
-         <%= link_to_unless_current "Graphs", visuals_path %> | <%= link_to_unless_current "Players", players_path %> | <%= link_to_unless_current "Teams", teams_path %> | <%= link_to_unless_current "Games", games_path %> | 
-       <% if logged_in? %>
-         <% if current_user.player %>
-           <%= link_to_unless_current "Edit Profile", edit_player_path(current_user.player) %> 
-         <% else %>
-            Authorization Required to edit profiles
-         <% end %>
-         | <%= link_to_unless_current "Logout", logout_path %>
-     <% else %>
-       <%= link_to "Signup", signup_path %> | <%= link_to "Login", login_path %>
-     <% end %>
-   </div>
-   <div class="clear"></div>
-   <% if flash[:alert] %><div class="grid_16"><p class="alert"><%= flash[:alert] %></p></div><div class="clear"></div><% end %> 
-   <%= yield %>
-   <div class="grid_16" id="footer">
-   </div>
- </div>
+    <%= favicon_link_tag %>
+  </head>
+  <body>
+    <div class="container">
 
- </body>
+      <div class="span-24" id="header">
+        <div class="span-8">
+          <%= link_to((image_tag "major_league_pong.png", :alt => "Major League Pong", :width => 300), root_path) %>
+        </div>
+        <div class="span-8 push-8 last">
+          <% if logged_in? -%>
+            <div class="box">
+              <p class="loud bottom"><span class="large"><strong><%= current_user.username %></strong></span> hit <strong><%= current_user.player.hit_count %></strong> cups for <strong><%= current_user.player.points %></strong> points in the last <strong><%= current_user.player.shots.count %></strong> shots for an overall score of <strong><%= current_user.player.opp %></strong> with <strong><%= current_user.player.suicides %></strong> suicides and <strong><%= current_user.player.assholes %></strong> assholes.</p>
+            </div>
+          <% end -%>
+        </div>
+      </div>
+
+      <div class="span-24" id="navigation">
+        <div class="span-12">
+          <h1><%= link_to "major league pong", root_path %></h1>
+        </div>
+        <div class="span-12 last">
+          <ul>
+            <% if logged_in? -%>
+              <% if current_user.player.team and not current_user.player.team.players.count >= 3 -%>
+                <li class="large"><%= link_to_unless_current "Invite", players_path %></li>
+              <% end -%>
+              <li class="large"><%= link_to_unless_current "Players", players_path %></li>
+              <li class="large"><%= link_to_unless_current "Teams", teams_path %></li>
+              <li class="large"><%= link_to_unless_current "Games", games_path %></li>
+              <li class="large"><%= link_to_unless_current "Profile", current_user.player %></li>
+              <li class="large"><%= link_to_unless_current "Logout", logout_path %></li>
+            <% else -%>
+              <li class="large"><%= link_to_unless_current "Login", login_path %></li>
+            <% end -%>
+          </ul>
+        </div>
+      </div>
+
+      <hr />
+
+      <% unless flash.blank? -%>
+        <div class="span-24">
+          <% flash.each do |key, msg| %>
+            <%= content_tag :div, msg, :class => key %>
+          <% end %>
+        </div>
+      <% end -%>
+
+      <div class="span-24" id="content">
+        <%= yield %>
+      </div>
+
+      <div class="span-24" id="footer">
+        <div class="span-8 quiet">
+          <ul class="no-disc">
+            <li>Fucking ideate</li>
+            <li>Use more fucking white space</li>
+            <li>Fucking start over</li>
+            <li>Read the fucking copy</li>
+            <li>Don't be greedy</li>
+            <li>Capitalize on the fucking experience</li>
+            <li>Use fucking alignment</li>
+            <li>Less if fucking more</li>
+            <li>Learn from your fucking mistakes</li>
+            <li>There is no fucking box</li>
+            <li>Pay attention to fucking detail</li>
+            <li>Think fucking laterally</li>
+            <li>Write a fucking design brief</li>
+            <li>Don't be trendy</li>
+          </ul>
+        </div>
+        <div class="span-8">
+          <h2>Have a clear fucking hierarchy</h2>
+        </div>
+        <div class="span-8 last quiet">
+          <ul class="no-disc">
+            <li>Consider your fucking user</li>
+            <li>Fucking do it again</li>
+            <li>Sans-fucking-serif</li>
+            <li>Fucking experiment</li>
+            <li>Get over your fucking self</li>
+            <li>Work outside of your fucking habits</li>
+            <li>Do it right the first fucking time</li>
+            <li>Give a damn</li> 
+            <li>Learn from your fucking peers</li>
+            <li>Love your job</li>
+            <li>Fucking simplify</li>
+            <li>Take a fucking chance</li>
+            <li>Educate your client</li>
+            <li>Be a good fucking person</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

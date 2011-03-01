@@ -1,9 +1,11 @@
 class SessionsController < ApplicationController
+  skip_before_filter :login_required
+
   def create
     user = User.authenticate(params[:login], params[:password])
     if user
       session[:user_id] = user.id
-      flash[:notice] = "Logged in successfully."
+      flash[:success] = "Logged in successfully."
       redirect_to_target_or_default("/")
     else
       flash.now[:error] = "Invalid login or password."
@@ -13,7 +15,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    flash[:notice] = "You have been logged out."
+    flash[:success] = "You have been successfully logged out."
     redirect_to "/"
   end
 end

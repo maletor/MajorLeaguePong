@@ -3,6 +3,7 @@ class Ability
 
   def initialize(user)
     can :read, :all
+
     if user
       can :update, Player, :user_id == user.id
 

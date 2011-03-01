@@ -1,0 +1,25 @@
+<% if @invitation.errors.any? %>
+  <div class="error">
+    <% @invitation.errors.full_messages.each do |msg| %>
+      <%= msg %><br/>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_for @invitation do |f| %>
+  <%= field_set_tag "Invite" do %>
+    <p>
+      <%= f.label :name, "Friend's name" %><br />
+      <%= f.text_field :name, :class => 'title' %>
+    </p>
+    <p>
+      <%= f.label :recipient_email, "Friend's email address" %><br />
+      <%= f.text_field :recipient_email, :class => 'text' %>
+    </p>
+    <p>
+      <%= f.label :team_id, "Team" %><br />
+      <%= f.select :team_id, Team.all.collect { |t| [t.name, t.id] }, { :include_blank => "Free Agent" } %>
+    </p>
+    <p><%= f.submit "Invite" %></p>
+  <% end -%>
+<% end -%>

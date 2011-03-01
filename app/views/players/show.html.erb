@@ -1,82 +1,77 @@
-<div class="grid_16">
+<div class="span-17 colborder">
+  <h3><%= @player.user.username %></h3>
   <p>
-    <h3><%= @player.name %></h3>
+    <h6><%= @player.team.blank? ? "Free Agent" : link_to(@user.player.team.name, @user.player.team) %></h6>
   </p>
+  
 
-  <p>
-      <% if @player.team %>
-        <%= link_to(@player.team.name, @player.team) %>
-      <% else %>
-        Free Agent 
-      <% end %>
-  </p>
-
-<div class="clear"></div>
-<div class="grid_16">
   <div id="game_opp"></div>
 </div>
 
-  <hr />
-  <%= RedCloth.new(@player.profile).to_html.html_safe  %>
-  <p>
+<div class="span-6 last">
+  <p class="right">
+    <%= image_tag @player.avatar.url(:thumb), :width => 230 %>
+  </p>
+<p class="right">
     <% if can? :update, @player %>
-      <%= link_to "Edit Profile", edit_player_path(@player) %>
+      <%= link_to "Edit Profile", edit_player_path(@player) %> | 
     <% end %>
     <% if can? :manage, @player %>
-      <%= link_to "Delete Player", player_path(@player), :method => :delete, :confirm => "Are you sure?" %>
+      <%= link_to "Delete Player", user_path(@player.user), :method => :delete, :confirm => "Are you sure?" %>
     <% end %>
+  </p>
+  <p>
+    <%= RedCloth.new(@player.profile).to_html.html_safe  %>
   </p>
 </div>
 
-
 <%= javascript_tag do %>
-$(document).ready(function() {
-	new Highcharts.Chart({
-		chart: {
-			renderTo: 'game_opp',
-			defaultSeriesType: 'line'
-		},
-		title: {
-			text: 'Overall Per Game'
-		},
-		xAxis: {
-                  categories: <%= raw @player.games.sort { |x, y| x.time <=> y.time }.collect { |g| g.time.to_s(:short) } %>
-		},
-		yAxis: {
-			title: {
-				text: 'Overall'
-			}
-		},
-		tooltip: {
-			enabled: true,
-			formatter: function() {
-				return this.x +': '+ this.y;
-			}
-		},
-		plotOptions: {
+  $(document).ready(function() {
+  new Highcharts.Chart({
+  chart: {
+  renderTo: 'game_opp',
+  defaultSeriesType: 'line'
+  },
+  title: {
+  text: 'Overall Per Game'
+  },
+  xAxis: {
+  
+},
+yAxis: {
+title: {
+text: 'Overall'
+}
+},
+tooltip: {
+enabled: true,
+formatter: function() {
+return this.x +': '+ this.y;
+}
+},
+plotOptions: {
 series: {
-            cursor: 'pointer',
-            events: {
-                click: function(event) {
-                window.location.replace("<%=  %>");
-                }
-            }
-        },
-                
-			line: {
-				dataLabels: {
-					enabled: true
-				},
-				enableMouseTracking: false
-			}                        
-		},
-		series: [{
-			name: 'Performance',
-                        data: <%= raw @player.games.collect { |g| number_with_precision(@player.overall_per_game(g)).to_f } %>
-		}]
-	});
-	
-	
-});
-                          
-<% end %>
+cursor: 'pointer',
+events: {
+click: function(event) {
+window.location.replace("<%=  %>");
+}
+}
+},
+
+line: {
+dataLabels: {
+enabled: true
+},
+enableMouseTracking: false
+}                        
+},
+series: [{
+name: 'Performance'
+                }]
+                });
+
+
+                });
+
+              <% end %>

@@ -1,8 +1,15 @@
 class User < ActiveRecord::Base
   has_one :player
+  accepts_nested_attributes_for :player
+
+  validates_presence_of :invitation_id, :message => 'is required'
+  validates_uniqueness_of :invitation_id
+
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+  belongs_to :invitation
 
   # new columns need to be added here to be writable through mass assignment
-  attr_accessible :username, :email, :password, :password_confirmation
+  attr_accessible :username, :email, :password, :password_confirmation, :player_attributes, :invitation_token
 
   attr_accessor :password
   before_save :prepare_password
@@ -15,6 +22,10 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
 
+  def to_param  # overridden
+    "#{id}-#{username}"
+  end
+
   # login can be either username or email address
   def self.authenticate(login, pass)
     user = find_by_username(login) || find_by_email(login)
@@ -23,6 +34,14 @@ class User < ActiveRecord::Base
 
   def matching_password?(pass)
     self.password_hash == encrypt_password(pass)
+  end
+
+  def invitation_token
+    invitation.token if invitation
+  end
+
+  def invitation_token=(token)
+    self.invitation = Invitation.find_by_token(token)
   end
 
   private

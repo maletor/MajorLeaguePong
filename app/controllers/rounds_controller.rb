@@ -1,9 +1,12 @@
 class RoundsController < ApplicationController
   load_and_authorize_resource
+  helper_method :sort_column, :sort_direction  
   
   def index
     @game = Game.find(params[:game_id])
     @rounds = @game.rounds.order("number asc")
+
+    flash.now[:info] = "This game has not yet been scored." if @rounds.blank?
   end
 
   def show
@@ -12,9 +15,8 @@ class RoundsController < ApplicationController
 
   def new
     @game = Game.find(params[:game_id])
-    @round = @game.rounds.build
-
-    6.times { @round.shots.build }
+    #@round = @game.rounds.build
+    #@round.number = @game.rounds.count > 1 ? @game.rounds.count + 1 : 1
   end
 
   def edit
@@ -27,7 +29,7 @@ class RoundsController < ApplicationController
     @round = @game.rounds.new(params[:round])
 
     if @round.save
-      redirect_to(game_rounds_path(@game), :notice => 'Round was successfully created.')
+      redirect_to(game_rounds_path(@game), :flash => { :success => 'Round was successfully created.' })
     else
       render :action => "new"
     end
@@ -38,7 +40,7 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
 
     if @round.update_attributes(params[:round])
-      redirect_to(game_rounds_path(@game), :notice => 'Round was successfully updated.')
+      redirect_to(game_rounds_path(@game), :flash => { :success => 'Round was successfully updated.' })
     else
       render :action => "edit" 
     end
@@ -54,4 +56,17 @@ class RoundsController < ApplicationController
 
     redirect_to(game_rounds_url(@game))
   end
+
+  private
+
+  def sort_column
+    params[:sort] ||= "number"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
+
+
 end

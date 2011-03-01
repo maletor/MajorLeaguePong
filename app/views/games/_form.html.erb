@@ -1,32 +1,44 @@
+<% if @game.errors.any? %>
+  <div class="error">
+    <h4><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+    <ul>
+      <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for(@game) do |f| %>
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+  <%= field_set_tag 'Details' do %>
+    <p>
+      <%= f.label :time %><br />
+      <%= f.datetime_select :time %>
+    </p>
 
-      <ul>
-        <% @game.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+    <p>
+      <%= f.label :away_id, "Away Team" %><br />
+      <%= f.select :away_id, Team.all.collect { |t| [ t.name, t.id ] } %>
+    </p>
+
+    <p>
+      <%= f.label :away_player_ids, "Away Players" %><br />
+      <%= f.select :away_player_ids, Player.all.collect { |p| [ p.name, p.id ] }, { :selected => @game.away_player_ids }, { :multiple => true } %>
+    </p> 
+
+    <p>
+      <%= f.label :home_id, "Home Team" %><br />
+      <%= f.select :home_id, Team.all.collect { |t| [ t.name, t.id ] } %>
+    </p> 
+
+    <p>
+      <%= f.label :home_player_ids, "Home Players" %><br />
+      <%= f.select :home_player_ids, Player.all.collect { |p| [ p.name, p.id ] }, { :selected => @game.home_player_ids }, { :multiple => true } %>
+    </p> 
+
+    <p>
+      <%= f.submit %>
+    </p>
   <% end %>
-  <div class="field">
-    <%= f.label :time %><br />
-    <%= f.datetime_select :time %>
-  </div>
-
-  <div class="field">
-    Away Team<br />
-    <%= f.select :away_id, Team.all.collect {|t| [ t.name, t.id ] } %>
-  </div>
-
-  <div class="field">
-    Home Team<br />
-    <%= f.select :home_id, Team.all.collect {|t| [ t.name, t.id ] } %>
-  </div> 
-
-  <br />  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

@@ -1,6 +1,2 @@
-<div class="grid_16">
-<h3>Editing player</h3>
-
+<h2><%= @user.player.team.blank? ? "Free Agent" : @user.player.team.name %> Player Profile</h2>
 <%= render 'form' %>
-
-</div>

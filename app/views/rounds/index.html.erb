@@ -1,50 +1,37 @@
-<div class="grid_16">
-  <h3><%= @game.away.name %> at <%= @game.home.name %></h3>
-  <% if can? :manage, @game %>
-    <p>
-      <%= link_to "Edit Game", edit_game_path(@game) %> | <%= link_to "Delete", @game, :method => :delete, :confirm => "Are you sure?" %>
-    </p>
-  <% end %>
-  
-  <% if can? :create, Round %>  
-    <p>
-      <%= link_to 'New Round', new_game_round_path(params[:game_id]) %>
-    </p>
-  <% end %>
-  <div class="grid_4 alpha">
-    <h6>Round</h6>
-  </div>
-  <% @game.players.each_with_index do |p, i| %>
-    <div class="grid_2<%= " omega" if i == 5 %>">
-    <h6><%= p.name %></h6>
-  </div>
-  <% end %>
-  <div class="clear"></div>
-  <% @rounds.each do |round| %>
-    <div class="grid_4 alpha">
-      <% if can? :edit, Round %>
-        <%= link_to round.number, edit_game_round_path(@game, round) %> 
-      <% else %>
-        <%= round.number %>
-      <% end %>
-    </div>
+<h2>
+  <%= "#{@game.away.name} at #{@game.home.name}" %>
+</h2>
+<h4>
+  <%= @game.time.to_s(:long) %>
+</h4>
 
-    <% round.shots.each_with_index do |shot, i| %>
-      <div class="grid_2<%= " omega" if i == 5 %>">
-        <% if shot.cup != 0 %>
-          <%= shot.cup %>
-        <% elsif !shot.player %>
-          &nbsp;
-        <% else %>
-          -
-        <% end %>
-      </div>
-    <% end %>
-  <div class="clear"></div>
-  <% end %>
+<% unless @game.rounds.blank? -%>
+<table>
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th><%= @game.away_players[0].name %></th>
+      <th><%= @game.away_players[1].name %></th>
+      <th><%= @game.away_players[2].name %></th>
+      <th><%= @game.home_players[0].name %></th>
+      <th><%= @game.home_players[1].name %></th>
+      <th><%= @game.home_players[2].name %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rounds.each do |round| -%>
+      <tr>
+        <td><%= link_to round.number, edit_game_round_path(@game, round) %></td>
+        <% round.shots.each do |shot| -%>
+          <td><%= render_shot(shot) %></td>
+        <% end -%>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+<% end -%>
 
-
-  <br />
-
-</div>
+<% if can? :manage, Round -%>
+  <p><%= link_to "New Round", new_game_round_path %></p>
+<% end -%>
 
