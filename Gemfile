@@ -6,8 +6,6 @@ gem 'unicorn'
 gem 'capistrano'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
-gem 'aws-s3', :require => 'aws/s3'
-
 group :development, :test do
   gem 'webrat'
   gem 'mocha'
