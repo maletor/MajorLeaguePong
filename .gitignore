@@ -5,4 +5,4 @@ tmp/**/*
 *.swp
 db/schema.rb
 config/database.yml
-config/envirnoments/production.rb
+config/environments/production.rb
