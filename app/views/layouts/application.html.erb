@@ -38,7 +38,7 @@
           <ul>
             <% if logged_in? -%>
               <% if current_user.player.team and not current_user.player.team.players.count >= 3 -%>
-                <li class="large"><%= link_to_unless_current "Invite", players_path %></li>
+                <li class="large"><%= link_to_unless_current "Invite", new_invitation_path %></li>
               <% end -%>
               <li class="large"><%= link_to_unless_current "Players", players_path %></li>
               <li class="large"><%= link_to_unless_current "Teams", teams_path %></li>

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new(:invitation_token => params[:invitation_token])
     player = @user.build_player
+    player.team = @user.invitation.team
 
     #redirect_to(login_url, :flash => { :error => "You must be invited to sign up." })
   end

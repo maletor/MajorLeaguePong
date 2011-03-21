@@ -6,7 +6,15 @@ class Player < ActiveRecord::Base
   has_and_belongs_to_many :home_games, :class_name => "Game"
   has_and_belongs_to_many :away_games, :class_name => "Game"
 
-  has_attached_file :avatar, :default_url => "/images/missing.gif", :styles => { :thumb => "230x230>" }
+  has_attached_file :avatar, :default_url => "/images/missing.gif", :styles => { :thumb => "230x230>" }, :storage => :s3
+
+  validates_attachment_content_type :avatar,
+    :content_type => ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'],
+    :message => "only image files are allowed."
+
+  validates_attachment_size :avatar,
+    :less_than => 1.megabyte,
+    :message => "max size is 1 megabyte."
 
   def to_param
     "#{id}-#{user.username}"
