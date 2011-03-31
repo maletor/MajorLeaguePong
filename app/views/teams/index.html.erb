@@ -5,7 +5,7 @@
       <th><%= sortable 'name' %></th>
       <th><%= sortable 'opp', 'Overall' %></th>
       <th><%= sortable 'hit_percentage', 'Hit %' %></th>
-      <th><%= sortable 'shot_count', 'Shots' %></th>
+      <th>Shots</th>
       <th><%= sortable 'points', 'Points' %></th>
       <th><%= sortable 'hit_count', 'Hits' %></th>
       <th><%= sortable 'wins' %></th>
@@ -20,7 +20,7 @@
         <td><strong><%= number_to_percentage team.hit_percentage %></strong></td>
         <td><%= team.shots.hits.count %></td>
         <td><%= team.points %></td>
-        <td><%= team.shots.where("cup != 0").count %></td>
+        <td><%= team.shots.hits.where("cup != 0").count %></td>
         <td><%= team.wins %></td>
       </tr>
     <% end -%>

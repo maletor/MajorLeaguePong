@@ -15,7 +15,7 @@
         <td><%= link_to game.away.name, team_path(game.away) %></td>
         <td><%= link_to game.home.name, team_path(game.home) %></td>
         <td><%= game.rounds.count %></td>
-        <td><%= game.shots.count %></td>
+        <td><%= game.shots.hits.count %></td>
       </tr>
     <% end -%>
   </tbody>
