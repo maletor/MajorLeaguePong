@@ -9,7 +9,7 @@ MajorLeaguePong::Application.routes.draw do
   resources :visuals
   resources :sessions
   resources :users
-  resources :players
+  resources :players, except: :new
   resources :teams
   resources :rounds  
 

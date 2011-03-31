@@ -9,7 +9,6 @@
       <th><%= sortable 'points', 'Points' %></th>
       <th><%= sortable 'hit_count', 'Hits' %></th>
       <th><%= sortable 'wins' %></th>
-      <th><%= sortable 'losses' %></th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +22,6 @@
         <td><%= team.points %></td>
         <td><%= team.shots.where("cup != 0").count %></td>
         <td><%= team.wins %></td>
-        <td><%= team.losses %></td>
       </tr>
     <% end -%>
   </tbody>

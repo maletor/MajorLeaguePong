@@ -1,3 +1,0 @@
-h1. MajorLeaguePong
-
-h3. Have a clear fucking hierarchy

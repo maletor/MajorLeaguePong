@@ -2,7 +2,7 @@
   <thead>
     <tr> 
       <th>Rank</th>
-      <th><%= sortable 'users.username', 'Username' %></th>
+      <th><%= sortable 'name', 'Name' %></th>
       <th><%= sortable 'opp', 'Overall' %></th>
       <th><%= sortable 'hit_percentage', 'Hit %' %></th>
       <th><%= sortable 'shots_count', 'Shots' %></th>
@@ -14,7 +14,7 @@
     <% @players.each_with_index do |player, i| -%>
       <tr>
         <td><%= i + 1 %></td>
-        <td><%= logged_in? ? (link_to player.user.username, user_path(player.user)) : player.user.username %></td>
+        <td><%= logged_in? ? (link_to player.name, user_path(player.user)) : player.user.username %></td>
         <td><strong><%= number_with_precision player.opp %></strong></td>
         <td><strong><%= number_to_percentage player.hit_percentage * 100 %></strong></td>
         <td><%= player.shots.hits.count %></td>
