@@ -24,7 +24,7 @@
         <div class="span-8 push-8 last">
           <% if logged_in? -%>
             <div class="box">
-              <p class="loud bottom"><span class="large"><strong><%= current_user.username %></strong></span> hit <strong><%= current_user.player.hit_count %></strong> cups for <strong><%= current_user.player.points %></strong> points in the last <strong><%= current_user.player.shots.count %></strong> shots for an overall score of <strong><%= current_user.player.opp %></strong> with <strong><%= current_user.player.suicides %></strong> suicides and <strong><%= current_user.player.assholes %></strong> assholes.</p>
+              <p class="loud bottom"><%= link_to current_user.username, current_user %> hit <%= pluralize(current_user.player.hit_count, 'cup') %> for <%= pluralize current_user.player.points, 'point' %> in the last <%= pluralize current_user.player.shots.count, 'shot' %> for an overall score of <%= number_with_precision current_user.player.opp %> and a hit percentage of <%= number_to_percentage current_user.player.hit_percentage * 100 %> with <%= pluralize current_user.player.suicides, 'suicide' %> and <%= pluralize current_user.player.assholes, 'asshole' %>.</p>
             </div>
           <% end -%>
         </div>
@@ -37,13 +37,9 @@
         <div class="span-12 last">
           <ul>
             <% if logged_in? -%>
-              <% if current_user.player.team and not current_user.player.team.players.count >= 3 -%>
-                <li class="large"><%= link_to_unless_current "Invite", new_invitation_path %></li>
-              <% end -%>
               <li class="large"><%= link_to_unless_current "Players", players_path %></li>
               <li class="large"><%= link_to_unless_current "Teams", teams_path %></li>
               <li class="large"><%= link_to_unless_current "Games", games_path %></li>
-              <li class="large"><%= link_to_unless_current "Profile", current_user.player %></li>
               <li class="large"><%= link_to_unless_current "Logout", logout_path %></li>
             <% else -%>
               <li class="large"><%= link_to_unless_current "Login", login_path %></li>
@@ -70,19 +66,19 @@
         <div class="span-8 quiet">
           <ul class="no-disc">
             <li>Fucking ideate</li>
-            <li>Use more fucking white space</li>
-            <li>Fucking start over</li>
-            <li>Read the fucking copy</li>
             <li>Don't be greedy</li>
-            <li>Capitalize on the fucking experience</li>
+            <li>Don't be trendy</li>
+            <li>Fucking start over</li>
+            <li>Less is fucking more</li>
+            <li>Read the fucking copy</li>
             <li>Use fucking alignment</li>
-            <li>Less if fucking more</li>
-            <li>Learn from your fucking mistakes</li>
             <li>There is no fucking box</li>
-            <li>Pay attention to fucking detail</li>
             <li>Think fucking laterally</li>
             <li>Write a fucking design brief</li>
-            <li>Don't be trendy</li>
+            <li>Use more fucking white space</li>
+            <li>Pay attention to fucking detail</li>
+            <li>Learn from your fucking mistakes</li>
+            <li>Capitalize on the fucking experience</li>
           </ul>
         </div>
         <div class="span-8">
@@ -90,20 +86,20 @@
         </div>
         <div class="span-8 last quiet">
           <ul class="no-disc">
-            <li>Consider your fucking user</li>
-            <li>Fucking do it again</li>
-            <li>Sans-fucking-serif</li>
-            <li>Fucking experiment</li>
-            <li>Get over your fucking self</li>
-            <li>Work outside of your fucking habits</li>
-            <li>Do it right the first fucking time</li>
             <li>Give a damn</li> 
-            <li>Learn from your fucking peers</li>
             <li>Love your job</li>
             <li>Fucking simplify</li>
-            <li>Take a fucking chance</li>
+            <li>Fucking experiment</li>
+            <li>Sans-fucking-serif</li>
+            <li>Fucking do it again</li>
             <li>Educate your client</li>
+            <li>Take a fucking chance</li>
             <li>Be a good fucking person</li>
+            <li>Consider your fucking user</li>
+            <li>Get over your fucking self</li>
+            <li>Learn from your fucking peers</li>
+            <li>Do it right the first fucking time</li>
+            <li>Work outside of your fucking habits</li>
           </ul>
         </div>
       </div>

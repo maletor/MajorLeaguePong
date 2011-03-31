@@ -5,27 +5,24 @@ class Shot < ActiveRecord::Base
   belongs_to :team
 
   after_create :award_player
-  #before_destroy :punish_player
-  #before_update :process_change
+  before_destroy :punish_player
+  before_update :process_change
+
+  scope :hits, where(cup: 0..10)
 
   def process_change
-    if player_id_changed? and not cup_changed?
-      Player.find(player_id_change[0]).punish(to_points)
-    end
-    if cup_changed? and not player_id_changed?
-      player.punish(to_points)
-    end
-    if player_id_changed? and cup_changed?
-      Player.find(player_id_change[0]).punish(to_points(cup_change[0]))
-    end
+    #Player.find(player_id_change[0]).punish(self) if player_id_changed?
+    #Player.find(player_id_change[1]).award(self) if player_id_changed?
   end
 
   def award_player
-    player.award(self) unless self.cup.nil?
+    player.award(self)
+    team.award(self)
   end
 
   def punish_player
-    player.punish(self) unless self.cup.nil?
+    player.punish(self)
+    team.punish(self)
   end
 
   def to_points

@@ -49,7 +49,7 @@ class TeamsController < ApplicationController
   private
 
   def sort_column
-    params[:sort] ||= "wins"
+    params[:sort] ||= "opp"
   end
 
   def sort_direction

@@ -10,8 +10,11 @@ class Game < ActiveRecord::Base
   
   accepts_nested_attributes_for :rounds, :allow_destroy => true
 
+  def to_param
+    "#{id}-#{away.name}-#{home.name.gsub(/ /,"-")}"
+  end
+
   def players
     away_players + home_players 
   end
 end
-

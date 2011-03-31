@@ -2,13 +2,14 @@
   <thead>
     <tr> 
       <th>Rank</th>
-      <th>Username</th>
-      <th>Hits</th>
-      <th>Shots</th>
-      <th>Points</th>
-      <th>Overall</th>
-      <th>Assholes</th>
-      <th>Suicides</th>
+      <th><%= sortable 'users.username', 'Username' %></th>
+      <th><%= sortable 'opp', 'Overall' %></th>
+      <th><%= sortable 'hit_percentage', 'Hit %' %></th>
+      <th><%= sortable 'shots.count', 'Shots' %></th>
+      <th><%= sortable 'points' %></th>
+      <th><%= sortable 'hit_count', 'Hits' %></th>
+      <th><%= sortable 'assholes' %></th>
+      <th><%= sortable 'suicides' %></th>
     </tr>
   </thead>
   <tbody>
@@ -16,17 +17,14 @@
       <tr>
         <td><%= i + 1 %></td>
         <td><%= link_to player.user.username, user_path(player.user) %></td>
-        <td><%= player.shots.where("cup != 0").count %></td>
+        <td><strong><%= number_with_precision player.opp %></strong></td>
+        <td><strong><%= number_to_percentage player.hit_percentage * 100 %></strong></td>
         <td><%= player.shots.count %></td>
         <td><%= player.points %></td>
-        <td><strong><%= number_with_precision player.opp %></strong></td>
+        <td><%= player.shots.where("cup != 0").count %></td>
         <td><%= player.assholes %></td>
         <td><%= player.suicides %></td>
       </tr>
     <% end -%>
   </tbody>
 </table>
-
-<% if can? :manage, Player -%>
-  <p><%= link_to "New Player", new_player_path %></p>
-<% end -%>

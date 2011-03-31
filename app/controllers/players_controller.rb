@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
   skip_before_filter :login_required, only: [:index, :show]
 
   def index
-    @players = Player.includes(:shots, :team).order("#{sort_column} #{sort_direction}")
+    @players = Player.includes(:user, :shots, :team).order("LOWER(#{sort_column}) #{sort_direction}")
   end
 
   def show

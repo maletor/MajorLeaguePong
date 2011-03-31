@@ -58,4 +58,37 @@ class Team < ActiveRecord::Base
     games.count - wins
   end
 
+    def calculate_hit_percentage
+    hit_count.to_f / shots.count.to_f
+  end
+
+  def calculate_opp
+    points.to_f / shots.count.to_f
+  end
+
+  def award(shot)
+    if (1..10).include?(shot.cup)
+      self.hit_count += 1
+      self.points += shot.to_points
+      self.wins += 1 if shot.cup == 10
+    end
+
+    self.suicides += shot.cup - 10 if !shot.cup.nil? && shot.cup > 10
+    self.opp = calculate_opp
+    self.hit_percentage = calculate_hit_percentage
+    save!
+  end
+
+  def punish(shot)
+     if (1..10).include?(shot.cup)
+      self.hit_count -= 1
+      self.points -= shot.to_points
+      self.wins -= 1 if shot.cup == 10
+    end
+
+    self.suicides -= shot.cup - 10 if !shot.cup.nil? && shot.cup > 10
+    self.opp = calculate_opp
+    self.hit_percentage = calculate_hit_percentage
+    save!
+  end
 end

@@ -1,10 +1,11 @@
 <table>
   <thead>
     <tr> 
-      <th>Time</th>
-      <th>Away</th>
-      <th>Home</th>
-      <th>Rounds</th>
+      <th><%= sortable 'time' %></th>
+      <th><%= sortable 'games.away.name', 'Away' %></th>
+      <th><%= sortable 'team.name', 'Home' %></th>
+      <th><%= sortable 'rounds_count', 'Rounds' %></th>
+      <th><%= sortable 'shots_count', 'Shots' %></th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,7 @@
         <td><%= link_to game.away.name, team_path(game.away) %></td>
         <td><%= link_to game.home.name, team_path(game.home) %></td>
         <td><%= game.rounds.count %></td>
+        <td><%= game.shots.count %></td>
       </tr>
     <% end -%>
   </tbody>
