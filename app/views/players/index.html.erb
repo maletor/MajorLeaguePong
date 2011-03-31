@@ -5,25 +5,21 @@
       <th><%= sortable 'users.username', 'Username' %></th>
       <th><%= sortable 'opp', 'Overall' %></th>
       <th><%= sortable 'hit_percentage', 'Hit %' %></th>
-      <th><%= sortable 'shots.count', 'Shots' %></th>
+      <th><%= sortable 'shots_count', 'Shots' %></th>
       <th><%= sortable 'points' %></th>
       <th><%= sortable 'hit_count', 'Hits' %></th>
-      <th><%= sortable 'assholes' %></th>
-      <th><%= sortable 'suicides' %></th>
     </tr>
   </thead>
   <tbody>
     <% @players.each_with_index do |player, i| -%>
       <tr>
         <td><%= i + 1 %></td>
-        <td><%= link_to player.user.username, user_path(player.user) %></td>
+        <td><%= logged_in? ? (link_to player.user.username, user_path(player.user)) : player.user.username %></td>
         <td><strong><%= number_with_precision player.opp %></strong></td>
         <td><strong><%= number_to_percentage player.hit_percentage * 100 %></strong></td>
-        <td><%= player.shots.count %></td>
+        <td><%= player.shots.hits.count %></td>
         <td><%= player.points %></td>
         <td><%= player.shots.where("cup != 0").count %></td>
-        <td><%= player.assholes %></td>
-        <td><%= player.suicides %></td>
       </tr>
     <% end -%>
   </tbody>

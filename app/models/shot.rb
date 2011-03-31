@@ -8,7 +8,7 @@ class Shot < ActiveRecord::Base
   before_destroy :punish_player
   before_update :process_change
 
-  scope :hits, where(cup: 0..10)
+  scope :hits, where("cup is not null")
 
   def process_change
     #Player.find(player_id_change[0]).punish(self) if player_id_changed?

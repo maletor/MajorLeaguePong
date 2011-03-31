@@ -58,12 +58,12 @@ class Team < ActiveRecord::Base
     games.count - wins
   end
 
-    def calculate_hit_percentage
-    hit_count.to_f / shots.count.to_f
+  def calculate_hit_percentage
+    shots.hits.count.zero? ? 0 : hit_count.to_f / shots.hits.count.to_f
   end
 
   def calculate_opp
-    points.to_f / shots.count.to_f
+    shots.hits.count.zero? ? 0 : points.to_f / shots.hits.count.to_f
   end
 
   def award(shot)
