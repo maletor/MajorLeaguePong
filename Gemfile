@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.5'
-gem 'mysql2'
+gem 'mysql2', :group => :production
 gem 'unicorn'
 gem 'capistrano'
 gem 'sqlite3-ruby', :require => 'sqlite3'
