@@ -7,3 +7,4 @@ db/schema.rb
 config/database.yml
 config/environments/production.rb
 config/s3_credentials.yml
+config/unicorn.conf.rb
