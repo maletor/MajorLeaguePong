@@ -15,11 +15,11 @@
   <%= field_set_tag "Account Details" do %>
     <p>
       <%= f.label :username %><br />
-      <%= f.text_field :username, :class => 'title', disabled: true %>
+      <%= f.text_field :username, :class => 'title' %>
     </p>
     <p>
       <%= f.label :email, "Email Address" %><br />
-      <%= f.email_field :email, :class => 'text', disabled: true %>
+      <%= f.email_field :email, :class => 'text'  %>
     </p>
     <p>
       <%= f.label :password %><br />
@@ -34,7 +34,7 @@
     <%= f.fields_for :player do |g| -%>
       <p>
         <%= g.label :name, "Real Name" %><br />
-        <%= g.text_field :name, :class => 'title', disabled: true %>
+        <%= g.text_field :name, :class => 'title' %>
       </p>
       <p>
         <%= g.label :avatar %><br />
