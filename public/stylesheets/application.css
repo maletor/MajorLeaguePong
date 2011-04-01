@@ -27,6 +27,7 @@
 
 #navigation ul li:after {
   margin-left: 10px;
+  color: #ddd;
   content: "|"
 }
 
