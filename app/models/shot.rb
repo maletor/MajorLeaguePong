@@ -11,8 +11,7 @@ class Shot < ActiveRecord::Base
   scope :hits, where("cup is not null")
 
   def process_change
-    #Player.find(player_id_change[0]).punish(self) if player_id_changed?
-    #Player.find(player_id_change[1]).award(self) if player_id_changed?
+    cup_was < cup ? award_player : punish_player
   end
 
   def award_player
@@ -25,15 +24,21 @@ class Shot < ActiveRecord::Base
     team.punish(self)
   end
 
-  def to_points
-    if [1, 2, 3, 5, 6].include?(cup)
+  def to_points(previous = false)
+    a_cup = previous ? cup_was : cup
+      
+    if [1, 2, 3, 5, 6].include?(a_cup)
       1
-    elsif [4, 7, 8, 9].include?(cup) 
+    elsif [4, 7, 8, 9].include?(a_cup) 
       2
-    elsif cup == 10
+    elsif a_cup == 10
       3
     else
       0
     end
+  end
+  
+  def point_change
+    (to_points - to_points(true)).abs
   end
 end

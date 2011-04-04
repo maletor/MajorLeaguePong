@@ -41,11 +41,12 @@ class Player < ActiveRecord::Base
   def calculate_opp
     shots.hits.count.zero? ? 0 : points.to_f / shots.hits.count.to_f
   end
-
+  
   def award(shot)
     if (1..10).include?(shot.cup)
-      self.hit_count += 1
-      self.points += shot.to_points
+      # shot.cup_was is nil when the player is awarded for the first time
+      self.hit_count += 1 if shot.cup_was == 0 or shot.cup_was == nil
+      self.points += shot.point_change
     end
 
     self.suicides += shot.cup - 10 if !shot.cup.nil? && shot.cup > 10
@@ -55,10 +56,8 @@ class Player < ActiveRecord::Base
   end
 
   def punish(shot)
-     if (1..10).include?(shot.cup)
-      self.hit_count -= 1
-      self.points -= shot.to_points
-    end
+    self.hit_count -= 1 if shot.cup == 0
+    self.points -= shot.point_change
 
     self.suicides -= shot.cup - 10 if !shot.cup.nil? && shot.cup > 10
     self.opp = calculate_opp
