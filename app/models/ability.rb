@@ -11,7 +11,7 @@ class Ability
         team.players.include?(user.player)
       end
 
-      if user.email == "eberner@gmail.com" || user.email == "bjennings88@gmail.com"
+      if user.email == "eberner@gmail.com" || user.email == "bjennings88@gmail.com" || user.email == "josh@jsteiner.me"
         can :manage, :all
       end
     end
