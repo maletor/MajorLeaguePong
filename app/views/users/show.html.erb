@@ -1,0 +1,64 @@
+<div class="span-17 colborder">
+  <h3><%= @user.username %></h3>
+  <h6>(<%= @user.player.name %>)</h6>
+  <hr class="space" />
+  <% if @user == current_user -%>
+    <p><%= link_to "edit profile", edit_user_path(@user) %></p>
+  <% end -%>
+  <p>
+    <h6><%= @user.player && @user.player.team ? link_to(@user.player.team.name, @user.player.team) : "Free Agent" %></h6>
+  </p>
+  <div id="performance-chart"></div>
+</div>
+
+<div class="span-6 last">
+  <p class="right">
+    <%= image_tag @user.player.avatar.url(:thumb) %>
+  </p>
+</div>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: 'performance-chart',
+        defaultSeriesType: 'line'
+      },
+      title: {
+        text: 'Performance Per Game',
+      },
+      xAxis: {
+        title: {
+          text: 'Games',
+        },
+        categories: <%= raw @user.player.games.sort { |a, b| a.time <=> b.time }.collect { |g| g.time.to_s(:short) } %>
+      },
+      yAxis: {
+        title: {
+          text: false
+        }
+      },
+      tooltip: {
+        enabled: true,
+        formatter: function() {
+          return this.x +': '+ this.y;
+        }
+      },
+      plotOptions: {
+        line: {
+          enableMouseTracking: true
+        }                        
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'OPP',
+        data: <%= raw @user.player.games.sort { |a, b| a.time <=> b.time }.collect { |g| number_with_precision(@user.player.overall_per_game(g)).to_f } %>
+      }, {
+        name: 'Hit %',
+        data: <%= raw @user.player.games.sort { |a, b| a.time <=> b.time }.collect { |g| number_to_percentage(@user.player.hit_percentage_per_game(g)).to_f } %>
+      }]
+    });
+  });
+<% end -%>

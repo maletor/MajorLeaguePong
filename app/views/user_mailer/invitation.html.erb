@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Welcome to MajorLeaguePong.org, <%= @invitation.name %></h2>
+    <p>
+      You have been invited to sign up for league play. <% unless @invitation.team.blank? -%>Your team is <%= @invitation.team.name %>.<% else -%>You are playing as a free agent.
+      <% end -%>
+    </p>
+    <p>
+      <%= link_to "Signup now", @url %>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+Welcome to majorleaguepong.org, <%= @invitation.name %>
+===============================================
+ 
+You have been invited to sign up for league play. <% unless @invitation.team.blank? -%>Your team is <%= @invitation.team.name %>.<% else -%>You are playing as a free agent.<% end -%>
+ 
+To login to the site, just follow this link: <%= @url %>.
+ 
+Thanks for joining and have a great day!

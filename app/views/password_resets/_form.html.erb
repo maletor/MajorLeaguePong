@@ -1,0 +1,32 @@
+<% if @user.errors.any? %>
+  <div id="error">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited your password from resetting:</h2>
+
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %> 
+
+<%= form_for @user, :url => password_reset_path(@user), :html => { :method => :put } do |f| %>
+  <%= field_set_tag "Forgot Password" do %>
+    <p>
+      <%= f.label :email %><br />
+      <%= @user.email %>
+    </p>
+    <p>
+      <%= f.label :password %><br />
+      <%= f.password_field :password, :class => 'text' %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, :class => 'text' %>
+      <%= hidden_field_tag :token, @token %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end -%>
+<% end -%>
